@@ -1,0 +1,10 @@
+﻿
+
+namespace CloudKeysController
+{
+    class KeyChainMgr
+    {
+
+
+    }
+}
