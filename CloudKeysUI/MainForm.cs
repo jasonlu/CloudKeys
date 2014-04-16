@@ -1,13 +1,24 @@
 ﻿using System;
 using System.Windows.Forms;
+using CloudKeysModel;
+using CloudKeysController;
 
 namespace CloudKeysUI
 {
     public partial class MainForm : Form
     {
+
+        private CloudKeysController.KeyChainMgr _keyChainMgr;
+        public CloudKeysController.KeyChainMgr KeyChainMgr
+        {
+            set { this._keyChainMgr = value; }
+            get { return this._keyChainMgr; }
+        }
+
         public MainForm()
         {
             InitializeComponent();
+            _keyChainMgr = (CloudKeysController.KeyChainMgr)this.Tag;
         }
 
         private void _menuitemFileNew_Click(object sender, EventArgs e)

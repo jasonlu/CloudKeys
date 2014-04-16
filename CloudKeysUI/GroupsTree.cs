@@ -5,9 +5,13 @@ namespace CloudKeysUI
 {
     public partial class GroupsTree : UserControl
     {
+        private CloudKeysController.KeyChainMgr _mgr;
         public GroupsTree()
         {
             InitializeComponent();
+            MainForm f = (MainForm)this.ParentForm;
+            _mgr = f.KeyChainMgr;
+
         }
 
         private void _toolbarNewGroup_Click(object sender, EventArgs e)

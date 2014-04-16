@@ -1,10 +1,15 @@
-﻿
+﻿using CloudKeysModel;
+using System.Collections.Generic;
 
 namespace CloudKeysController
 {
-    class KeyChainMgr
+    public class KeyChainMgr
     {
-
+        public KeyChain KeyChain;
+        public List<Group> getGroups()
+        {
+            return KeyChain.Groups;
+        }
 
     }
 }

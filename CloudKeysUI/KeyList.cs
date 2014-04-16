@@ -12,9 +12,14 @@ namespace CloudKeysUI
 {
     public partial class KeyList : UserControl
     {
+
+        private CloudKeysController.KeyChainMgr _mgr;
+
         public KeyList()
         {
             InitializeComponent();
+            MainForm f = (MainForm)this.ParentForm;
+            _mgr = f.KeyChainMgr;
         }
     }
 }
