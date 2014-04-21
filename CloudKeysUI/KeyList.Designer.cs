@@ -60,6 +60,7 @@
             this.columnHeader4});
             this._listview.ContextMenuStrip = this.contextMenuStrip1;
             this._listview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._listview.FullRowSelect = true;
             this._listview.GridLines = true;
             this._listview.Location = new System.Drawing.Point(0, 31);
             this._listview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);

@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            CloudKeysController.KeyChainMgr keyChainMgr1 = new CloudKeysController.KeyChainMgr();
+            CloudKeysModel.KeyChain keyChain1 = new CloudKeysModel.KeyChain();
+            CloudKeysController.KeyChainMgr keyChainMgr2 = new CloudKeysController.KeyChainMgr();
+            CloudKeysModel.KeyChain keyChain2 = new CloudKeysModel.KeyChain();
             this._toolbar = new System.Windows.Forms.ToolStrip();
             this._toolbarNewFile = new System.Windows.Forms.ToolStripButton();
             this._toolbarOpenFile = new System.Windows.Forms.ToolStripButton();
@@ -61,16 +65,22 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this._detialBox = new System.Windows.Forms.RichTextBox();
-            this._keyList = new CloudKeysUI.KeyList();
-            this._groupsTree = new CloudKeysUI.GroupsTree();
             this._statusBar = new CloudKeysUI.StatusBar();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this._groupsTree = new CloudKeysUI.GroupsTree();
+            this._keyList = new CloudKeysUI.KeyList();
+            this._rtfDetailBox = new System.Windows.Forms.RichTextBox();
             this._toolbar.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // _toolbar
@@ -86,7 +96,7 @@
             this._toolbar.Location = new System.Drawing.Point(0, 25);
             this._toolbar.Name = "_toolbar";
             this._toolbar.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this._toolbar.Size = new System.Drawing.Size(1344, 31);
+            this._toolbar.Size = new System.Drawing.Size(1073, 31);
             this._toolbar.TabIndex = 0;
             this._toolbar.Text = "toolStrip1";
             // 
@@ -157,7 +167,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(1344, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1073, 25);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -369,86 +379,100 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // tableLayoutPanel1
+            // _statusBar
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.44037F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.55963F));
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this._groupsTree, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 56);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1344, 660);
-            this.tableLayoutPanel1.TabIndex = 2;
+            this._statusBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this._statusBar.Location = new System.Drawing.Point(0, 519);
+            this._statusBar.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this._statusBar.Name = "_statusBar";
+            this._statusBar.Size = new System.Drawing.Size(1073, 42);
+            this._statusBar.TabIndex = 1;
             // 
-            // tableLayoutPanel2
+            // splitContainer1
             // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this._detialBox, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this._keyList, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(386, 5);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(954, 650);
-            this.tableLayoutPanel2.TabIndex = 0;
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 56);
+            this.splitContainer1.Name = "splitContainer1";
             // 
-            // _detialBox
+            // splitContainer1.Panel1
             // 
-            this._detialBox.BackColor = System.Drawing.Color.White;
-            this._detialBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._detialBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._detialBox.Location = new System.Drawing.Point(4, 330);
-            this._detialBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this._detialBox.Name = "_detialBox";
-            this._detialBox.ReadOnly = true;
-            this._detialBox.Size = new System.Drawing.Size(946, 315);
-            this._detialBox.TabIndex = 0;
-            this._detialBox.Text = "";
+            this.splitContainer1.Panel1.Controls.Add(this._groupsTree);
             // 
-            // _keyList
+            // splitContainer1.Panel2
             // 
-            this._keyList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._keyList.KeyChainMgr = null;
-            this._keyList.Location = new System.Drawing.Point(6, 8);
-            this._keyList.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this._keyList.Name = "_keyList";
-            this._keyList.Size = new System.Drawing.Size(942, 309);
-            this._keyList.TabIndex = 1;
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Size = new System.Drawing.Size(1073, 463);
+            this.splitContainer1.SplitterDistance = 357;
+            this.splitContainer1.TabIndex = 2;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this._keyList);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this._rtfDetailBox);
+            this.splitContainer2.Size = new System.Drawing.Size(712, 463);
+            this.splitContainer2.SplitterDistance = 237;
+            this.splitContainer2.TabIndex = 0;
             // 
             // _groupsTree
             // 
             this._groupsTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._groupsTree.KeyChainMgr = null;
-            this._groupsTree.Location = new System.Drawing.Point(6, 8);
-            this._groupsTree.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            keyChain1.CurrentGroup = null;
+            keyChain1.CurrentKey = null;
+            keyChain1.Filename = "?\\NEWFILE\\?";
+            keyChain1.Saved = false;
+            keyChainMgr1.KeyChain = keyChain1;
+            this._groupsTree.KeyChainMgr = keyChainMgr1;
+            this._groupsTree.Location = new System.Drawing.Point(0, 0);
+            this._groupsTree.MainForm = null;
+            this._groupsTree.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._groupsTree.Name = "_groupsTree";
-            this._groupsTree.Size = new System.Drawing.Size(370, 644);
-            this._groupsTree.TabIndex = 1;
+            this._groupsTree.Size = new System.Drawing.Size(355, 461);
+            this._groupsTree.TabIndex = 0;
             // 
-            // _statusBar
+            // _keyList
             // 
-            this._statusBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this._statusBar.Location = new System.Drawing.Point(0, 716);
-            this._statusBar.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this._statusBar.Name = "_statusBar";
-            this._statusBar.Size = new System.Drawing.Size(1344, 42);
-            this._statusBar.TabIndex = 1;
+            this._keyList.Dock = System.Windows.Forms.DockStyle.Fill;
+            keyChain2.CurrentGroup = null;
+            keyChain2.CurrentKey = null;
+            keyChain2.Filename = "?\\NEWFILE\\?";
+            keyChain2.Saved = false;
+            keyChainMgr2.KeyChain = keyChain2;
+            this._keyList.KeyChainMgr = keyChainMgr2;
+            this._keyList.Location = new System.Drawing.Point(0, 0);
+            this._keyList.MainForm = null;
+            this._keyList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this._keyList.Name = "_keyList";
+            this._keyList.Size = new System.Drawing.Size(710, 235);
+            this._keyList.TabIndex = 0;
+            // 
+            // _rtfDetailBox
+            // 
+            this._rtfDetailBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._rtfDetailBox.Location = new System.Drawing.Point(0, 0);
+            this._rtfDetailBox.Name = "_rtfDetailBox";
+            this._rtfDetailBox.ReadOnly = true;
+            this._rtfDetailBox.Size = new System.Drawing.Size(710, 220);
+            this._rtfDetailBox.TabIndex = 0;
+            this._rtfDetailBox.Text = "";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1344, 758);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(1073, 561);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this._toolbar);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this._statusBar);
@@ -462,8 +486,14 @@
             this._toolbar.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -484,12 +514,7 @@
         private System.Windows.Forms.ToolStripButton _toolbarPrint;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton _toolbarHelp;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.RichTextBox _detialBox;
         private StatusBar _statusBar;
-        private KeyList _keyList;
-        private GroupsTree _groupsTree;
         private System.Windows.Forms.ToolStripMenuItem _menuitemFileNew;
         private System.Windows.Forms.ToolStripMenuItem _menuitemFileOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -510,5 +535,10 @@
         private System.Windows.Forms.ToolStripMenuItem _menuitemViewShowToolbar;
         private System.Windows.Forms.ToolStripMenuItem _menuitemViewShowStatusbar;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private GroupsTree _groupsTree;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private KeyList _keyList;
+        private System.Windows.Forms.RichTextBox _rtfDetailBox;
     }
 }
