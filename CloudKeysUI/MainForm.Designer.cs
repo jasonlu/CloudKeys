@@ -83,9 +83,10 @@
             this._toolbarPrint,
             this.toolStripSeparator1,
             this._toolbarHelp});
-            this._toolbar.Location = new System.Drawing.Point(0, 24);
+            this._toolbar.Location = new System.Drawing.Point(0, 25);
             this._toolbar.Name = "_toolbar";
-            this._toolbar.Size = new System.Drawing.Size(896, 31);
+            this._toolbar.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this._toolbar.Size = new System.Drawing.Size(1344, 31);
             this._toolbar.TabIndex = 0;
             this._toolbar.Text = "toolStrip1";
             // 
@@ -155,7 +156,8 @@
             this._menuitemHelpAbout});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(896, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(1344, 25);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -171,7 +173,7 @@
             this.toolStripSeparator3,
             this._menuitemFileExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 19);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // _menuitemFileNew
@@ -185,7 +187,7 @@
             // _menuitemFileOpen
             // 
             this._menuitemFileOpen.Name = "_menuitemFileOpen";
-            this._menuitemFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this._menuitemFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this._menuitemFileOpen.Size = new System.Drawing.Size(184, 22);
             this._menuitemFileOpen.Text = "Open";
             this._menuitemFileOpen.Click += new System.EventHandler(this._menuitemFileOpen_Click);
@@ -246,7 +248,7 @@
             this._menuitemEditDeleteKeys,
             this._menuitemEditDuplicateKeys});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 19);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // _menuitemEditAddGroup
@@ -323,7 +325,7 @@
             this._menuitemViewShowToolbar,
             this._menuitemViewShowStatusbar});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 19);
             this.viewToolStripMenuItem.Text = "View";
             // 
             // _menuitemViewShowToolbar
@@ -349,7 +351,7 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 19);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // _menuitemHelpAbout
@@ -357,7 +359,7 @@
             this._menuitemHelpAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this._menuitemHelpAbout.Name = "_menuitemHelpAbout";
-            this._menuitemHelpAbout.Size = new System.Drawing.Size(44, 20);
+            this._menuitemHelpAbout.Size = new System.Drawing.Size(44, 19);
             this._menuitemHelpAbout.Text = "Help";
             // 
             // aboutToolStripMenuItem
@@ -366,7 +368,6 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -376,11 +377,12 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this._groupsTree, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 55);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 56);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(896, 411);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1344, 660);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // tableLayoutPanel2
@@ -390,12 +392,13 @@
             this.tableLayoutPanel2.Controls.Add(this._detialBox, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this._keyList, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(257, 3);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(386, 5);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(636, 405);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(954, 650);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // _detialBox
@@ -403,10 +406,11 @@
             this._detialBox.BackColor = System.Drawing.Color.White;
             this._detialBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._detialBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._detialBox.Location = new System.Drawing.Point(3, 205);
+            this._detialBox.Location = new System.Drawing.Point(4, 330);
+            this._detialBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._detialBox.Name = "_detialBox";
             this._detialBox.ReadOnly = true;
-            this._detialBox.Size = new System.Drawing.Size(630, 197);
+            this._detialBox.Size = new System.Drawing.Size(946, 315);
             this._detialBox.TabIndex = 0;
             this._detialBox.Text = "";
             // 
@@ -414,38 +418,42 @@
             // 
             this._keyList.Dock = System.Windows.Forms.DockStyle.Fill;
             this._keyList.KeyChainMgr = null;
-            this._keyList.Location = new System.Drawing.Point(3, 3);
+            this._keyList.Location = new System.Drawing.Point(6, 8);
+            this._keyList.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this._keyList.Name = "_keyList";
-            this._keyList.Size = new System.Drawing.Size(630, 196);
+            this._keyList.Size = new System.Drawing.Size(942, 309);
             this._keyList.TabIndex = 1;
             // 
             // _groupsTree
             // 
             this._groupsTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this._groupsTree.KeyChainMgr = null;
-            this._groupsTree.Location = new System.Drawing.Point(3, 3);
+            this._groupsTree.Location = new System.Drawing.Point(6, 8);
+            this._groupsTree.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this._groupsTree.Name = "_groupsTree";
-            this._groupsTree.Size = new System.Drawing.Size(248, 405);
+            this._groupsTree.Size = new System.Drawing.Size(370, 644);
             this._groupsTree.TabIndex = 1;
             // 
             // _statusBar
             // 
             this._statusBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this._statusBar.Location = new System.Drawing.Point(0, 466);
+            this._statusBar.Location = new System.Drawing.Point(0, 716);
+            this._statusBar.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this._statusBar.Name = "_statusBar";
-            this._statusBar.Size = new System.Drawing.Size(896, 27);
+            this._statusBar.Size = new System.Drawing.Size(1344, 42);
             this._statusBar.TabIndex = 1;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(896, 493);
+            this.ClientSize = new System.Drawing.Size(1344, 758);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this._toolbar);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this._statusBar);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";

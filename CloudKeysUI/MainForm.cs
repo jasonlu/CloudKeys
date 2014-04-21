@@ -15,6 +15,16 @@ namespace CloudKeysUI
             get { return this._keyChainMgr; }
         }
 
+        public KeyList KeyList
+        {
+            get { return _keyList; }
+        }
+
+        public GroupsTree GroupsTree
+        {
+            get { return _groupsTree; }
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -27,30 +37,13 @@ namespace CloudKeysUI
                 _keyChainMgr = (CloudKeysController.KeyChainMgr)this.Tag;
             }
             _groupsTree.KeyChainMgr = _keyChainMgr;
+            _groupsTree.MainForm = this;
             _keyList.KeyChainMgr = _keyChainMgr;
+            _keyList.MainForm = this;
         }
 
-        public void Load(string filename)
-        {
-            openFile(filename);
-        }
 
-        public void Load()
-        {
-            openFile();
-        }
-
-        private void _menuitemFileNew_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void _menuitemFileOpen_Click(object sender, EventArgs e)
-        {
-            openFile();
-        }
-
-        private void openFile(string filename)
+        public void OpenFile(string filename)
         {
             if (promptToSave() == DialogResult.Yes)
             {
@@ -67,9 +60,7 @@ namespace CloudKeysUI
             }
         }
 
-
-
-        private void openFile()
+        public void OpenFile()
         {
             if (promptToSave() == DialogResult.Yes)
             {
@@ -86,7 +77,7 @@ namespace CloudKeysUI
             }
         }
 
-        private void saveFile(bool saveAs = false)
+        public void SaveFile(bool saveAs = false)
         {
             string filename = _keyChainMgr.Save(saveAs);
             if (filename == "")
@@ -98,14 +89,61 @@ namespace CloudKeysUI
                 this.Text = filename;
             }
         }
+
+        private DialogResult promptToSave()
+        {
+            if (!_keyChainMgr.KeyChain.Saved && _keyChainMgr.KeyChain.Filename != "?\\NEWFILE\\?")
+            {
+                DialogResult dr = MessageBox.Show("Everythin not saved will be lost, do you want to save?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    string path = _keyChainMgr.Save();
+                    if (path == "")
+                    {
+                        return DialogResult.Cancel;
+                    }
+                    else
+                    {
+                        return DialogResult.Yes;
+                    }
+                }
+                else if (dr == DialogResult.Cancel)
+                {
+                    return DialogResult.Cancel;
+                }
+                else
+                {
+                    return DialogResult.Yes;
+                    // go ahead and close thie window
+                }
+            }
+            else
+            {
+                return DialogResult.Yes;
+            }
+        }
+
+
+        #region Event Handlers
+        #region Menu Item Event Handlers
+        private void _menuitemFileNew_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _menuitemFileOpen_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+
         private void _menuitemFileSave_Click(object sender, EventArgs e)
         {
-            saveFile();
+            SaveFile();
         }
 
         private void _menuitemFileSaveAs_Click(object sender, EventArgs e)
         {
-            saveFile(true);
+            SaveFile(true);
         }
 
         private void _menuitemFilePrint_Click(object sender, EventArgs e)
@@ -167,12 +205,9 @@ namespace CloudKeysUI
         {
             _statusBar.Visible = ((ToolStripMenuItem)sender).Checked;
         }
+        #endregion
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        #region Toolbar Item Event Handlers
         private void _toolbarNewFile_Click(object sender, EventArgs e)
         {
 
@@ -180,7 +215,7 @@ namespace CloudKeysUI
 
         private void _toolbarOpenFile_Click(object sender, EventArgs e)
         {
-            openFile();
+            OpenFile();
         }
 
         private void _toolbarSave_Click(object sender, EventArgs e)
@@ -197,46 +232,14 @@ namespace CloudKeysUI
         {
 
         }
+        #endregion
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (promptToSave() == DialogResult.Cancel)
                 e.Cancel = true;
         }
-
-        private System.Windows.Forms.DialogResult promptToSave()
-        {
-            if (!_keyChainMgr.KeyChain.Saved && _keyChainMgr.KeyChain.Filename != "?\\NEWFILE\\?")
-            {
-                DialogResult dr = MessageBox.Show("Everythin not saved will be lost, do you want to save?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (dr == DialogResult.Yes)
-                {
-                    string path = _keyChainMgr.Save();
-                    if (path == "")
-                    {
-                        return DialogResult.Cancel;
-                    }
-                    else
-                    {
-                        return DialogResult.Yes;
-                    }
-                }
-                else if (dr == DialogResult.Cancel)
-                {
-                    return DialogResult.Cancel;
-                }
-                else
-                {
-                    return DialogResult.Yes;
-                    // go ahead and close thie window
-                }
-            }
-            else
-            {
-                return DialogResult.Yes;
-            }
-        }
-
+        #endregion
 
     }
 }

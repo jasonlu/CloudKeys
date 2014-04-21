@@ -75,7 +75,7 @@ namespace CloudKeysController
         public string Save(bool saveAs = false)
         {
             string filename;
-            if (_keyChain.Filename == null || saveAs)
+            if (_keyChain.Filename == null || _keyChain.Filename == KeyChain.DefaultFilename || saveAs)
             {
                 SaveFileDialog d = new SaveFileDialog();
                 string exe = Assembly.GetExecutingAssembly().Location;

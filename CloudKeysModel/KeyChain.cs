@@ -9,11 +9,12 @@ namespace CloudKeysModel
         Key _currentKey;
         string _filename;
         bool _saved;
+        public const string DefaultFilename = "?\\NEWFILE\\?";
 
         public KeyChain()
         {
             _groups = new List<Group>();
-            _filename = "?\\NEWFILE\\?";
+            _filename = DefaultFilename;// "?\\NEWFILE\\?";
         }
 
         public List<Group> Groups

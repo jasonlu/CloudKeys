@@ -14,6 +14,32 @@ namespace CloudKeysUI
             this.StartPosition = FormStartPosition.CenterScreen;
         }
 
+        private void NewWindow(string filename)
+        {
+            MainForm f = new MainForm();
+            f.MdiParent = this;
+            _openedWindow.Add(f);
+            f.StartPosition = FormStartPosition.Manual;
+            f.Location = new System.Drawing.Point(_openedWindow.Count * 10, _openedWindow.Count * 10);
+            ToolStripMenuItem windowItem = new ToolStripMenuItem();
+
+            if (filename == "")
+            {
+                f.Text = "untitled";
+            }
+            else
+            {
+                f.OpenFile(filename);
+            }
+            windowItem.Text = f.Text;
+            windowItem.Tag = f;
+            windowItem.Click += _menuitemWindowOpenedItem_Click;
+            _menuitemWindowOpenedWindow.DropDown.Items.Add(windowItem);
+
+            f.Show();
+        }
+
+        #region Event Handlers
         void Application_Idle(object sender, EventArgs e)
         {
             if (_openedWindow.Count > 0)
@@ -32,34 +58,11 @@ namespace CloudKeysUI
             }
         }
 
+        #region Menu Item Event Handlers
+        #region Menu Item Files Event Handlers
         private void _menuitemFileNew_Click(object sender, EventArgs e)
         {
             NewWindow("");
-        }
-
-        private void NewWindow(string filename)
-        {
-            MainForm f = new MainForm();
-            f.MdiParent = this;
-            _openedWindow.Add(f);
-            f.StartPosition = FormStartPosition.Manual;
-            f.Location = new System.Drawing.Point(_openedWindow.Count * 10, _openedWindow.Count * 10);
-            ToolStripMenuItem windowItem = new ToolStripMenuItem();
-
-            if (filename == "")
-            {
-                f.Text = "untitled";
-            }
-            else
-            {
-                f.Load(filename);
-            }
-            windowItem.Text = f.Text;
-            windowItem.Tag = f;
-            windowItem.Click += _menuitemWindowOpenedItem_Click;
-            _menuitemWindowOpenedWindow.DropDown.Items.Add(windowItem);
-
-            f.Show();
         }
 
         private void _menuitemWindowOpenedItem_Click(object sender, EventArgs e)
@@ -89,11 +92,22 @@ namespace CloudKeysUI
 
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void _menuitemFileCloseAll_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in this.MdiChildren)
+            {
+                f.Close();
+            }
+        }
+
+        private void _menuitemFileExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        #endregion
+
+        #region Menu Item Window Event Handlers
         private void tileHorizontallyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.TileHorizontal);
@@ -108,23 +122,23 @@ namespace CloudKeysUI
         {
             this.LayoutMdi(MdiLayout.Cascade);
         }
+        #endregion
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        #region Menu Item Help Event Handlers
+        private void _menuitemHelpAbout_Click(object sender, EventArgs e)
         {
 
         }
-
-        private void _menuitemFileCloseAll_Click(object sender, EventArgs e)
-        {
-            foreach (Form f in this.MdiChildren)
-            {
-                f.Close();
-            }
-        }
+        #endregion
+        
+        #endregion
 
         private void MDIParentForm_MdiChildActivate(object sender, EventArgs e)
         {
             Console.Write("Childrens: " + this.MdiChildren.Length.ToString());
         }
+        #endregion
+
+        
     }
 }

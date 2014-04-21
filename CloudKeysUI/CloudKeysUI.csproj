@@ -98,6 +98,9 @@
     <EmbeddedResource Include="GroupsTree.resx">
       <DependentUpon>GroupsTree.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="KeyDialog.resx">
+      <DependentUpon>KeyDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="KeyList.resx">
       <DependentUpon>KeyList.cs</DependentUpon>
     </EmbeddedResource>

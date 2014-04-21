@@ -8,6 +8,14 @@ namespace CloudKeysUI
 {
     public partial class GroupsTree : UserControl
     {
+        private MainForm _mainForm;
+
+        public MainForm MainForm
+        {
+            get { return _mainForm; }
+            set { _mainForm = value; }
+        }
+
         private KeyChainMgr _mgr;
 
         public KeyChainMgr KeyChainMgr
@@ -20,9 +28,9 @@ namespace CloudKeysUI
         {
             InitializeComponent();
             Application.Idle += Application_Idle;
-            //MainForm f = (MainForm)this.ParentForm;
+            _mainForm = (MainForm)this.ParentForm;
             //_mgr = f.KeyChainMgr;
-            //_mgr = new KeyChainMgr();
+            _mgr = new KeyChainMgr();
 
         }
 
@@ -58,6 +66,7 @@ namespace CloudKeysUI
         private void _treeview_AfterSelect(object sender, TreeViewEventArgs e)
         {
             _mgr.KeyChain.CurrentGroup = (Group)_treeview.SelectedNode.Tag;
+            _mainForm.KeyList.LoadKeys();
         }
 
         private void _treeview_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
@@ -101,9 +110,6 @@ namespace CloudKeysUI
                     _treeview.SelectedNode.Text = newGroup.Title;
                     _mgr.KeyChain.Saved = false;
                 }
-
-
-
             }
         }
 

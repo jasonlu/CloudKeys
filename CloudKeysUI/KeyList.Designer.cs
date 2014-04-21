@@ -62,8 +62,9 @@
             this._listview.Dock = System.Windows.Forms.DockStyle.Fill;
             this._listview.GridLines = true;
             this._listview.Location = new System.Drawing.Point(0, 31);
+            this._listview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._listview.Name = "_listview";
-            this._listview.Size = new System.Drawing.Size(646, 384);
+            this._listview.Size = new System.Drawing.Size(969, 607);
             this._listview.TabIndex = 0;
             this._listview.UseCompatibleStateImageBehavior = false;
             this._listview.View = System.Windows.Forms.View.Details;
@@ -158,7 +159,8 @@
             this._toobarDeleteKeys});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(646, 31);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(969, 31);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -171,6 +173,7 @@
             this._toolbarNewKey.Name = "_toolbarNewKey";
             this._toolbarNewKey.Size = new System.Drawing.Size(28, 28);
             this._toolbarNewKey.Text = "toolStripButton1";
+            this._toolbarNewKey.Click += new System.EventHandler(this._toolbarNewKey_Click);
             // 
             // _toolbarEditKey
             // 
@@ -181,6 +184,7 @@
             this._toolbarEditKey.Name = "_toolbarEditKey";
             this._toolbarEditKey.Size = new System.Drawing.Size(28, 28);
             this._toolbarEditKey.Text = "toolStripButton1";
+            this._toolbarEditKey.Click += new System.EventHandler(this._toolbarEditKey_Click);
             // 
             // toolStripSeparator1
             // 
@@ -196,16 +200,17 @@
             this._toobarDeleteKeys.Name = "_toobarDeleteKeys";
             this._toobarDeleteKeys.Size = new System.Drawing.Size(28, 28);
             this._toobarDeleteKeys.Text = "toolStripButton1";
+            this._toobarDeleteKeys.Click += new System.EventHandler(this._toobarDeleteKeys_Click);
             // 
             // KeyList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this._listview);
             this.Controls.Add(this.toolStrip1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "KeyList";
-            this.Size = new System.Drawing.Size(646, 415);
-            this.Load += new System.EventHandler(this.KeyList_Load);
+            this.Size = new System.Drawing.Size(969, 638);
             this.contextMenuStrip1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

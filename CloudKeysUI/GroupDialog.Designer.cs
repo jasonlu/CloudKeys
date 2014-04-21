@@ -38,9 +38,10 @@
             // _btnOk
             // 
             this._btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._btnOk.Location = new System.Drawing.Point(171, 69);
+            this._btnOk.Location = new System.Drawing.Point(256, 106);
+            this._btnOk.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._btnOk.Name = "_btnOk";
-            this._btnOk.Size = new System.Drawing.Size(75, 23);
+            this._btnOk.Size = new System.Drawing.Size(112, 35);
             this._btnOk.TabIndex = 20;
             this._btnOk.Text = "OK";
             this._btnOk.UseVisualStyleBackColor = true;
@@ -50,9 +51,10 @@
             // 
             this._btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._btnCancel.Location = new System.Drawing.Point(252, 69);
+            this._btnCancel.Location = new System.Drawing.Point(378, 106);
+            this._btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._btnCancel.Name = "_btnCancel";
-            this._btnCancel.Size = new System.Drawing.Size(75, 23);
+            this._btnCancel.Size = new System.Drawing.Size(112, 35);
             this._btnCancel.TabIndex = 30;
             this._btnCancel.Text = "Cancel";
             this._btnCancel.UseVisualStyleBackColor = true;
@@ -61,26 +63,29 @@
             // 
             this._textboxGroupName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._textboxGroupName.Location = new System.Drawing.Point(12, 25);
+            this._textboxGroupName.Location = new System.Drawing.Point(18, 38);
+            this._textboxGroupName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._textboxGroupName.Name = "_textboxGroupName";
-            this._textboxGroupName.Size = new System.Drawing.Size(314, 20);
+            this._textboxGroupName.Size = new System.Drawing.Size(469, 26);
             this._textboxGroupName.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(18, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 13);
+            this.label1.Size = new System.Drawing.Size(187, 20);
             this.label1.TabIndex = 3;
             this.label1.Text = "Please enter group name";
             // 
             // _btnTest
             // 
             this._btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._btnTest.Location = new System.Drawing.Point(13, 69);
+            this._btnTest.Location = new System.Drawing.Point(20, 106);
+            this._btnTest.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._btnTest.Name = "_btnTest";
-            this._btnTest.Size = new System.Drawing.Size(75, 23);
+            this._btnTest.Size = new System.Drawing.Size(112, 35);
             this._btnTest.TabIndex = 10;
             this._btnTest.Text = "Test";
             this._btnTest.UseVisualStyleBackColor = true;
@@ -89,15 +94,17 @@
             // GroupDialog
             // 
             this.AcceptButton = this._btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._btnCancel;
-            this.ClientSize = new System.Drawing.Size(339, 104);
+            this.ClientSize = new System.Drawing.Size(508, 160);
             this.Controls.Add(this._btnTest);
             this.Controls.Add(this.label1);
             this.Controls.Add(this._textboxGroupName);
             this.Controls.Add(this._btnCancel);
             this.Controls.Add(this._btnOk);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GroupDialog";
