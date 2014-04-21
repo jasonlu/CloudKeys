@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace CloudKeysModel
 {
-    class Group
+    public class Group
     {
         private Color _color;
 
@@ -29,6 +29,10 @@ namespace CloudKeysModel
             set { _title = value; }
         }
 
+        public Group()
+        {
+            _keys = new List<Key>();
+        }
 
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CloudKeysModel
 {
-    class KeyChain
+    public class KeyChain
     {
         List<Group> _groups;
         Group _currentGroup;
@@ -10,28 +10,38 @@ namespace CloudKeysModel
         string _filename;
         bool _saved;
 
-        List<Group> Groups
+        public KeyChain()
+        {
+            _groups = new List<Group>();
+            _filename = "?\\NEWFILE\\?";
+        }
+
+        public List<Group> Groups
         {
             get { return _groups; }
         }
 
-        Group CurrentGroup
+        public Group CurrentGroup
         {
+            set { _currentGroup = value; }
             get { return _currentGroup; }
         }
 
-        Key CurrentKey
+        public Key CurrentKey
         {
+            set { _currentKey = value; }
             get { return _currentKey; }
         }
 
-        string Filename
+        public string Filename
         {
+            set { _filename = value; }
             get { return _filename; }
         }
 
-        bool Saved
+        public bool Saved
         {
+            set { _saved = value; }
             get { return _saved; }
         }
     }

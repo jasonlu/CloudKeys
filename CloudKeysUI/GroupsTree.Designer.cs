@@ -30,15 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this._toolbarNewGroup = new System.Windows.Forms.ToolStripButton();
+            this._toolbarEditGroup = new System.Windows.Forms.ToolStripButton();
+            this._toolbarDeleteGroup = new System.Windows.Forms.ToolStripButton();
             this._treeview = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.duplicateGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._toolbarNewGroup = new System.Windows.Forms.ToolStripButton();
-            this._toolbarEditGroup = new System.Windows.Forms.ToolStripButton();
-            this._toolbarDeleteGroup = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -57,14 +57,50 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // _toolbarNewGroup
+            // 
+            this._toolbarNewGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._toolbarNewGroup.Image = global::CloudKeysUI.Properties.Resources.Folder;
+            this._toolbarNewGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._toolbarNewGroup.Name = "_toolbarNewGroup";
+            this._toolbarNewGroup.Size = new System.Drawing.Size(26, 28);
+            this._toolbarNewGroup.Text = "toolStripButton1";
+            this._toolbarNewGroup.Click += new System.EventHandler(this._toolbarNewGroup_Click);
+            // 
+            // _toolbarEditGroup
+            // 
+            this._toolbarEditGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._toolbarEditGroup.Enabled = false;
+            this._toolbarEditGroup.Image = global::CloudKeysUI.Properties.Resources.Folder_blue;
+            this._toolbarEditGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._toolbarEditGroup.Name = "_toolbarEditGroup";
+            this._toolbarEditGroup.Size = new System.Drawing.Size(29, 28);
+            this._toolbarEditGroup.Text = "toolStripButton2";
+            this._toolbarEditGroup.Click += new System.EventHandler(this._toolbarEditGroup_Click);
+            // 
+            // _toolbarDeleteGroup
+            // 
+            this._toolbarDeleteGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this._toolbarDeleteGroup.Enabled = false;
+            this._toolbarDeleteGroup.Image = global::CloudKeysUI.Properties.Resources.Delete;
+            this._toolbarDeleteGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._toolbarDeleteGroup.Name = "_toolbarDeleteGroup";
+            this._toolbarDeleteGroup.Size = new System.Drawing.Size(29, 28);
+            this._toolbarDeleteGroup.Text = "toolStripButton3";
+            this._toolbarDeleteGroup.Click += new System.EventHandler(this._toolbarDeleteGroup_Click);
+            // 
             // _treeview
             // 
             this._treeview.ContextMenuStrip = this.contextMenuStrip1;
             this._treeview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._treeview.LabelEdit = true;
             this._treeview.Location = new System.Drawing.Point(32, 0);
             this._treeview.Name = "_treeview";
             this._treeview.Size = new System.Drawing.Size(277, 510);
             this._treeview.TabIndex = 1;
+            this._treeview.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this._treeview_AfterLabelEdit);
+            this._treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this._treeview_AfterSelect);
+            this._treeview.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this._treeview_NodeMouseDoubleClick);
             // 
             // contextMenuStrip1
             // 
@@ -107,36 +143,6 @@
             this.deleteGroupToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.deleteGroupToolStripMenuItem.Text = "Delete group";
             // 
-            // _toolbarNewGroup
-            // 
-            this._toolbarNewGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this._toolbarNewGroup.Image = global::CloudKeysUI.Properties.Resources.Folder;
-            this._toolbarNewGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._toolbarNewGroup.Name = "_toolbarNewGroup";
-            this._toolbarNewGroup.Size = new System.Drawing.Size(29, 28);
-            this._toolbarNewGroup.Text = "toolStripButton1";
-            this._toolbarNewGroup.Click += new System.EventHandler(this._toolbarNewGroup_Click);
-            // 
-            // _toolbarEditGroup
-            // 
-            this._toolbarEditGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this._toolbarEditGroup.Enabled = false;
-            this._toolbarEditGroup.Image = global::CloudKeysUI.Properties.Resources.Folder_blue;
-            this._toolbarEditGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._toolbarEditGroup.Name = "_toolbarEditGroup";
-            this._toolbarEditGroup.Size = new System.Drawing.Size(29, 28);
-            this._toolbarEditGroup.Text = "toolStripButton2";
-            // 
-            // _toolbarDeleteGroup
-            // 
-            this._toolbarDeleteGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this._toolbarDeleteGroup.Enabled = false;
-            this._toolbarDeleteGroup.Image = global::CloudKeysUI.Properties.Resources.Delete;
-            this._toolbarDeleteGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._toolbarDeleteGroup.Name = "_toolbarDeleteGroup";
-            this._toolbarDeleteGroup.Size = new System.Drawing.Size(29, 28);
-            this._toolbarDeleteGroup.Text = "toolStripButton3";
-            // 
             // GroupsTree
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -145,6 +151,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "GroupsTree";
             this.Size = new System.Drawing.Size(309, 510);
+            this.Load += new System.EventHandler(this.GroupsTree_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);

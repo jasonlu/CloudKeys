@@ -34,8 +34,6 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this._contextMenuCopyKeys = new System.Windows.Forms.ToolStripMenuItem();
             this._contextMenuPasteKeys = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,11 +42,13 @@
             this._contextMenuNewKey = new System.Windows.Forms.ToolStripMenuItem();
             this._contextMenuEditKey = new System.Windows.Forms.ToolStripMenuItem();
             this._contextMenuDeleteKeys = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this._toolbarNewKey = new System.Windows.Forms.ToolStripButton();
             this._toolbarEditKey = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this._toobarDeleteKeys = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _listview
@@ -84,25 +84,6 @@
             // 
             this.columnHeader4.Text = "Password";
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._toolbarNewKey,
-            this._toolbarEditKey,
-            this.toolStripSeparator1,
-            this._toobarDeleteKeys});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(646, 31);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -114,7 +95,7 @@
             this._contextMenuEditKey,
             this._contextMenuDeleteKeys});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 164);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 142);
             // 
             // _contextMenuCopyKeys
             // 
@@ -167,6 +148,20 @@
             this._contextMenuDeleteKeys.Size = new System.Drawing.Size(192, 22);
             this._contextMenuDeleteKeys.Text = "Delete keys";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._toolbarNewKey,
+            this._toolbarEditKey,
+            this.toolStripSeparator1,
+            this._toobarDeleteKeys});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(646, 31);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
             // _toolbarNewKey
             // 
             this._toolbarNewKey.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -187,6 +182,11 @@
             this._toolbarEditKey.Size = new System.Drawing.Size(28, 28);
             this._toolbarEditKey.Text = "toolStripButton1";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
             // _toobarDeleteKeys
             // 
             this._toobarDeleteKeys.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -205,9 +205,10 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "KeyList";
             this.Size = new System.Drawing.Size(646, 415);
+            this.Load += new System.EventHandler(this.KeyList_Load);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

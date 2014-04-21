@@ -7,19 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CloudKeysController;
 
 namespace CloudKeysUI
 {
     public partial class KeyList : UserControl
     {
+        private KeyChainMgr _mgr;
 
-        private CloudKeysController.KeyChainMgr _mgr;
+        public KeyChainMgr KeyChainMgr
+        {
+            get { return _mgr; }
+            set { _mgr = value; }
+        }
+
 
         public KeyList()
         {
             InitializeComponent();
-            MainForm f = (MainForm)this.ParentForm;
-            _mgr = f.KeyChainMgr;
+        }
+
+        private void KeyList_Load(object sender, EventArgs e)
+        {
+
+            //_mgr = f.KeyChainMgr;
         }
     }
 }

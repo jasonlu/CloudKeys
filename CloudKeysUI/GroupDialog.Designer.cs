@@ -41,17 +41,19 @@
             this._btnOk.Location = new System.Drawing.Point(171, 69);
             this._btnOk.Name = "_btnOk";
             this._btnOk.Size = new System.Drawing.Size(75, 23);
-            this._btnOk.TabIndex = 0;
+            this._btnOk.TabIndex = 20;
             this._btnOk.Text = "OK";
             this._btnOk.UseVisualStyleBackColor = true;
+            this._btnOk.Click += new System.EventHandler(this._btnOk_Click);
             // 
             // _btnCancel
             // 
             this._btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this._btnCancel.Location = new System.Drawing.Point(252, 69);
             this._btnCancel.Name = "_btnCancel";
             this._btnCancel.Size = new System.Drawing.Size(75, 23);
-            this._btnCancel.TabIndex = 1;
+            this._btnCancel.TabIndex = 30;
             this._btnCancel.Text = "Cancel";
             this._btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -62,7 +64,7 @@
             this._textboxGroupName.Location = new System.Drawing.Point(12, 25);
             this._textboxGroupName.Name = "_textboxGroupName";
             this._textboxGroupName.Size = new System.Drawing.Size(314, 20);
-            this._textboxGroupName.TabIndex = 2;
+            this._textboxGroupName.TabIndex = 0;
             // 
             // label1
             // 
@@ -79,9 +81,10 @@
             this._btnTest.Location = new System.Drawing.Point(13, 69);
             this._btnTest.Name = "_btnTest";
             this._btnTest.Size = new System.Drawing.Size(75, 23);
-            this._btnTest.TabIndex = 4;
+            this._btnTest.TabIndex = 10;
             this._btnTest.Text = "Test";
             this._btnTest.UseVisualStyleBackColor = true;
+            this._btnTest.Click += new System.EventHandler(this._btnTest_Click);
             // 
             // GroupDialog
             // 
@@ -102,6 +105,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GroupDialog";
+            this.Load += new System.EventHandler(this.GroupDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

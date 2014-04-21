@@ -18,7 +18,26 @@ namespace CloudKeysUI
         public MainForm()
         {
             InitializeComponent();
-            _keyChainMgr = (CloudKeysController.KeyChainMgr)this.Tag;
+            if (this.Tag == null)
+            {
+                _keyChainMgr = new KeyChainMgr();
+            }
+            else
+            {
+                _keyChainMgr = (CloudKeysController.KeyChainMgr)this.Tag;
+            }
+            _groupsTree.KeyChainMgr = _keyChainMgr;
+            _keyList.KeyChainMgr = _keyChainMgr;
+        }
+
+        public void Load(string filename)
+        {
+            openFile(filename);
+        }
+
+        public void Load()
+        {
+            openFile();
         }
 
         private void _menuitemFileNew_Click(object sender, EventArgs e)
@@ -28,17 +47,65 @@ namespace CloudKeysUI
 
         private void _menuitemFileOpen_Click(object sender, EventArgs e)
         {
-
+            openFile();
         }
 
+        private void openFile(string filename)
+        {
+            if (promptToSave() == DialogResult.Yes)
+            {
+                filename = _keyChainMgr.Load(filename);
+                if (filename == "")
+                {
+                    // Do nothing...
+                }
+                else
+                {
+                    _groupsTree.LoadGroups();
+                    this.Text = filename;
+                }
+            }
+        }
+
+
+
+        private void openFile()
+        {
+            if (promptToSave() == DialogResult.Yes)
+            {
+                string filename = _keyChainMgr.Load();
+                if (filename == "")
+                {
+                    // Do nothing...
+                }
+                else
+                {
+                    _groupsTree.LoadGroups();
+                    this.Text = filename;
+                }
+            }
+        }
+
+        private void saveFile(bool saveAs = false)
+        {
+            string filename = _keyChainMgr.Save(saveAs);
+            if (filename == "")
+            {
+                // Do nothing...
+            }
+            else
+            {
+                this.Text = filename;
+            }
+        }
         private void _menuitemFileSave_Click(object sender, EventArgs e)
         {
-
+            saveFile();
         }
 
         private void _menuitemFileSaveAs_Click(object sender, EventArgs e)
         {
-
+            saveFile(true);
         }
 
         private void _menuitemFilePrint_Click(object sender, EventArgs e)
@@ -113,12 +180,12 @@ namespace CloudKeysUI
 
         private void _toolbarOpenFile_Click(object sender, EventArgs e)
         {
-
+            openFile();
         }
 
         private void _toolbarSave_Click(object sender, EventArgs e)
         {
-
+            _keyChainMgr.Save();
         }
 
         private void _toolbarPrint_Click(object sender, EventArgs e)
@@ -129,6 +196,45 @@ namespace CloudKeysUI
         private void _toolbarHelp_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (promptToSave() == DialogResult.Cancel)
+                e.Cancel = true;
+        }
+
+        private System.Windows.Forms.DialogResult promptToSave()
+        {
+            if (!_keyChainMgr.KeyChain.Saved && _keyChainMgr.KeyChain.Filename != "?\\NEWFILE\\?")
+            {
+                DialogResult dr = MessageBox.Show("Everythin not saved will be lost, do you want to save?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    string path = _keyChainMgr.Save();
+                    if (path == "")
+                    {
+                        return DialogResult.Cancel;
+                    }
+                    else
+                    {
+                        return DialogResult.Yes;
+                    }
+                }
+                else if (dr == DialogResult.Cancel)
+                {
+                    return DialogResult.Cancel;
+                }
+                else
+                {
+                    return DialogResult.Yes;
+                    // go ahead and close thie window
+                }
+            }
+            else
+            {
+                return DialogResult.Yes;
+            }
         }
 
 

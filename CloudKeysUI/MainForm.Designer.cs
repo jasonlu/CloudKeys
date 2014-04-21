@@ -413,6 +413,7 @@
             // _keyList
             // 
             this._keyList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._keyList.KeyChainMgr = null;
             this._keyList.Location = new System.Drawing.Point(3, 3);
             this._keyList.Name = "_keyList";
             this._keyList.Size = new System.Drawing.Size(630, 196);
@@ -421,6 +422,7 @@
             // _groupsTree
             // 
             this._groupsTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._groupsTree.KeyChainMgr = null;
             this._groupsTree.Location = new System.Drawing.Point(3, 3);
             this._groupsTree.Name = "_groupsTree";
             this._groupsTree.Size = new System.Drawing.Size(248, 405);
@@ -447,6 +449,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this._toolbar.ResumeLayout(false);
             this._toolbar.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

@@ -34,10 +34,10 @@ namespace CloudKeysUI
 
         private void _menuitemFileNew_Click(object sender, EventArgs e)
         {
-            NewWindow();
+            NewWindow("");
         }
 
-        private void NewWindow(string filename = null)
+        private void NewWindow(string filename)
         {
             MainForm f = new MainForm();
             f.MdiParent = this;
@@ -45,17 +45,16 @@ namespace CloudKeysUI
             f.StartPosition = FormStartPosition.Manual;
             f.Location = new System.Drawing.Point(_openedWindow.Count * 10, _openedWindow.Count * 10);
             ToolStripMenuItem windowItem = new ToolStripMenuItem();
-            string title = "";
-            if (filename == null)
+
+            if (filename == "")
             {
-                title = "untitled";
+                f.Text = "untitled";
             }
             else
             {
-                title = filename.Substring(filename.LastIndexOf("\\") + 1);
+                f.Load(filename);
             }
-            f.Text = title;
-            windowItem.Text = title;
+            windowItem.Text = f.Text;
             windowItem.Tag = f;
             windowItem.Click += _menuitemWindowOpenedItem_Click;
             _menuitemWindowOpenedWindow.DropDown.Items.Add(windowItem);
@@ -72,8 +71,9 @@ namespace CloudKeysUI
 
         private void _menuitemFileOpen_Click(object sender, EventArgs e)
         {
+
             OpenFileDialog fd = new OpenFileDialog();
-            fd.DefaultExt = "*.kcf";
+            fd.Filter = "KCF Documents (*.kcf)|*.kcf";
             fd.Multiselect = true;
             if (fd.ShowDialog() == DialogResult.OK)
             {
