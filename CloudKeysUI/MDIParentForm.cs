@@ -7,6 +7,8 @@ namespace CloudKeysUI
     public partial class MDIParentForm : Form
     {
         List<MainForm> _openedWindow = new List<MainForm>();
+        const FormWindowState DefaultState = FormWindowState.Maximized;
+        FormWindowState _windowState = DefaultState;
         public MDIParentForm()
         {
             InitializeComponent();
@@ -17,10 +19,15 @@ namespace CloudKeysUI
         private void NewWindow(string filename)
         {
             MainForm f = new MainForm();
+            string resFilename = "";
+            f.WindowState = _windowState;
             f.MdiParent = this;
             _openedWindow.Add(f);
-            f.StartPosition = FormStartPosition.Manual;
-            f.Location = new System.Drawing.Point(_openedWindow.Count * 10, _openedWindow.Count * 10);
+            if (_windowState != DefaultState)
+            {
+                f.StartPosition = FormStartPosition.Manual;
+                f.Location = new System.Drawing.Point(_openedWindow.Count * 10, _openedWindow.Count * 10);
+            }
             ToolStripMenuItem windowItem = new ToolStripMenuItem();
 
             if (filename == "")
@@ -29,14 +36,22 @@ namespace CloudKeysUI
             }
             else
             {
-                f.OpenFile(filename);
+                resFilename = f.OpenFile(filename);
+                
             }
-            windowItem.Text = f.Text;
-            windowItem.Tag = f;
-            windowItem.Click += _menuitemWindowOpenedItem_Click;
-            _menuitemWindowOpenedWindow.DropDown.Items.Add(windowItem);
+            if (resFilename == CloudKeysModel.KeyChain.WrongPassword)
+            {
 
-            f.Show();
+            }
+            else
+            {
+                windowItem.Text = f.Text;
+                windowItem.Tag = f;
+                windowItem.Click += _menuitemWindowOpenedItem_Click;
+                _menuitemWindowOpenedWindow.DropDown.Items.Add(windowItem);
+
+                f.Show();
+            }
         }
 
         #region Event Handlers
@@ -80,10 +95,15 @@ namespace CloudKeysUI
             fd.Multiselect = true;
             if (fd.ShowDialog() == DialogResult.OK)
             {
+                if (fd.FileNames.Length > 1)
+                {
+                    _windowState = FormWindowState.Normal;
+                }
                 foreach (string path in fd.FileNames)
                 {
                     NewWindow(path);
                 }
+                _windowState = DefaultState;
             }
         }
 

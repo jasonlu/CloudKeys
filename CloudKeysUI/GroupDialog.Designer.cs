@@ -33,6 +33,7 @@
             this._textboxGroupName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this._btnTest = new System.Windows.Forms.Button();
+            this._colorPicker = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // _btnOk
@@ -91,6 +92,14 @@
             this._btnTest.UseVisualStyleBackColor = true;
             this._btnTest.Click += new System.EventHandler(this._btnTest_Click);
             // 
+            // _colorPicker
+            // 
+            this._colorPicker.FormattingEnabled = true;
+            this._colorPicker.Location = new System.Drawing.Point(18, 70);
+            this._colorPicker.Name = "_colorPicker";
+            this._colorPicker.Size = new System.Drawing.Size(121, 28);
+            this._colorPicker.TabIndex = 31;
+            // 
             // GroupDialog
             // 
             this.AcceptButton = this._btnOk;
@@ -98,6 +107,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._btnCancel;
             this.ClientSize = new System.Drawing.Size(508, 160);
+            this.Controls.Add(this._colorPicker);
             this.Controls.Add(this._btnTest);
             this.Controls.Add(this.label1);
             this.Controls.Add(this._textboxGroupName);
@@ -125,5 +135,6 @@
         private System.Windows.Forms.TextBox _textboxGroupName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button _btnTest;
+        private System.Windows.Forms.ComboBox _colorPicker;
     }
 }

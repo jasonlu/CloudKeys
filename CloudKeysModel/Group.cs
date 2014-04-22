@@ -34,5 +34,19 @@ namespace CloudKeysModel
             _keys = new List<Key>();
         }
 
+        public Group Clone()
+        {
+            Group g = new Group();
+            g.Keys = new List<Key>();
+            foreach (Key k in _keys)
+            {
+                Key newKey = k.Clone();
+                // newKey.Group = g;
+                g.Keys.Add(newKey);
+            }
+            g.Title = _title;
+            g._color = _color;
+            return g;
+        }
     }
 }

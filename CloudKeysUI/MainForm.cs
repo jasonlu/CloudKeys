@@ -24,6 +24,11 @@ namespace CloudKeysUI
         {
             get { return _groupsTree; }
         }
+        
+        public RichTextBox DetailBox
+        {
+            get { return _rtfDetailBox; }
+        }
 
         public MainForm()
         {
@@ -40,10 +45,48 @@ namespace CloudKeysUI
             _groupsTree.MainForm = this;
             _keyList.KeyChainMgr = _keyChainMgr;
             _keyList.MainForm = this;
+            _statusBar.KeyChainMgr = _keyChainMgr;
+            _statusBar.MainForm = this;
+            Application.Idle += Application_Idle;
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            if(_keyChainMgr.KeyChain.CurrentKey == null){
+                _rtfDetailBox.Text = "";
+            }
+            else
+            {
+                UpdateDetail(_keyChainMgr.KeyChain.CurrentKey);
+            }
+
+            if (_keyChainMgr.KeyChain.Saved)
+            {
+                _toolbarSave.Enabled = _menuitemFileSave.Enabled = false; // _menuitemFileSaveAs.Enabled = false;
+            }
+            else
+            {
+                _toolbarSave.Enabled = _menuitemFileSave.Enabled = true; // _menuitemFileSaveAs.Enabled = true;
+            }
         }
 
 
-        public void OpenFile(string filename)
+        public void UpdateDetail(Key k)
+        {
+            if (k == (Key)_rtfDetailBox.Tag)
+            {
+                return;
+            }
+            _rtfDetailBox.Text = "Title: \t\t" + k.Title + "\n" + 
+                "--------------------\n" +
+                "URL: \t\t" + k.URL + "\n" +
+                "Username: \t" + k.Username + "\n" +
+                "Password: \t" + k.Password + "\n" +
+                "Notes:\n" + k.Notes;
+            _rtfDetailBox.Tag = k;
+        }
+
+        public string OpenFile(string filename)
         {
             if (promptToSave() == DialogResult.Yes)
             {
@@ -57,10 +100,27 @@ namespace CloudKeysUI
                     _groupsTree.LoadGroups();
                     this.Text = filename;
                 }
+                return filename;
             }
+            return "";
         }
 
-        public void OpenFile()
+        private string NewFile()
+        {
+            if (promptToSave() == DialogResult.Yes)
+            {
+                _keyChainMgr.NewKeyChain();// = new KeyChainMgr();
+                _groupsTree.KeyChainMgr = _keyChainMgr;
+                _keyList.KeyChainMgr = _keyChainMgr;
+                _statusBar.KeyChainMgr = _keyChainMgr;
+                _groupsTree.LoadGroups();
+                this.Text = "UNTITLED";
+                return KeyChain.DefaultFilename;
+            }
+            return "";
+        }
+
+        public string OpenFile()
         {
             if (promptToSave() == DialogResult.Yes)
             {
@@ -74,7 +134,9 @@ namespace CloudKeysUI
                     _groupsTree.LoadGroups();
                     this.Text = filename;
                 }
+                return filename;
             }
+            return "";
         }
 
         public void SaveFile(bool saveAs = false)
@@ -128,7 +190,7 @@ namespace CloudKeysUI
         #region Menu Item Event Handlers
         private void _menuitemFileNew_Click(object sender, EventArgs e)
         {
-
+            NewFile();
         }
 
         private void _menuitemFileOpen_Click(object sender, EventArgs e)
@@ -210,8 +272,9 @@ namespace CloudKeysUI
         #region Toolbar Item Event Handlers
         private void _toolbarNewFile_Click(object sender, EventArgs e)
         {
-
+            NewFile();
         }
+        
 
         private void _toolbarOpenFile_Click(object sender, EventArgs e)
         {

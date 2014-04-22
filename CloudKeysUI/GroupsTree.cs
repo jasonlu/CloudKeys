@@ -29,30 +29,30 @@ namespace CloudKeysUI
             InitializeComponent();
             Application.Idle += Application_Idle;
             _mainForm = (MainForm)this.ParentForm;
-            //_mgr = f.KeyChainMgr;
             _mgr = new KeyChainMgr();
-
         }
 
         void Application_Idle(object sender, EventArgs e)
         {
             if (_treeview.SelectedNode == null)
             {
-                _toolbarEditGroup.Enabled = false;
-                _toolbarDeleteGroup.Enabled = false;
+                _toolbarEditGroup.Enabled = 
+                _toolbarDeleteGroup.Enabled = 
+                deleteGroupToolStripMenuItem.Enabled =
+                copyGroupToolStripMenuItem.Enabled =
+                duplicateGroupToolStripMenuItem.Enabled = false;
+
             }
             else
             {
-                _toolbarEditGroup.Enabled = true;
-                _toolbarDeleteGroup.Enabled = true;
+                _toolbarEditGroup.Enabled = 
+                _toolbarDeleteGroup.Enabled =
+                deleteGroupToolStripMenuItem.Enabled =
+                copyGroupToolStripMenuItem.Enabled =
+                duplicateGroupToolStripMenuItem.Enabled = true;
             }
         }
 
-
-
-        private void GroupsTree_Load(object sender, EventArgs e)
-        {
-        }
 
         private void _treeview_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -102,14 +102,17 @@ namespace CloudKeysUI
                     TreeNode newNode = new TreeNode();
                     newNode.Tag = newGroup;
                     newNode.Text = newGroup.Title;
+                    newNode.BackColor = newGroup.Color;
+                    //newNode.ForeColor = System.Drawing.Color.
                     _treeview.Nodes.Add(newNode);
                     _treeview.SelectedNode = newNode;
                 }
                 else
                 {
                     _treeview.SelectedNode.Text = newGroup.Title;
-                    _mgr.KeyChain.Saved = false;
+                    _treeview.SelectedNode.BackColor = newGroup.Color;
                 }
+                _mgr.KeyChain.Saved = false;
             }
         }
 
@@ -122,6 +125,7 @@ namespace CloudKeysUI
                 TreeNode treeNode = new TreeNode();
                 treeNode.Tag = g;
                 treeNode.Text = g.Title;
+                treeNode.BackColor = g.Color;
                 _treeview.Nodes.Add(treeNode);
             }
 
@@ -138,6 +142,31 @@ namespace CloudKeysUI
         }
 
         private void _toolbarDeleteGroup_Click(object sender, EventArgs e)
+        {
+            _mgr.DeleteGroup((Group)_treeview.SelectedNode.Tag);
+            LoadGroups();
+        }
+
+        private void deleteGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _mgr.DeleteGroup((Group)_treeview.SelectedNode.Tag);
+            LoadGroups();
+        }
+
+        private void duplicateGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Group g = (Group)_treeview.SelectedNode.Tag;
+            Group newGroup = g.Clone();
+            _mgr.AddGroup(newGroup);
+            LoadGroups();
+        }
+
+        private void pasteGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void copyGroupToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }

@@ -7,15 +7,35 @@ namespace CloudKeysModel
         List<Group> _groups;
         Group _currentGroup;
         Key _currentKey;
+        private List<Key> _currentKeys;
+
+        public List<Key> CurrentKeys
+        {
+            get { return _currentKeys; }
+            set { _currentKeys = value; }
+        }
+
         string _filename;
         bool _saved;
         public const string DefaultFilename = "?\\NEWFILE\\?";
+        public const string WrongPassword = "?\\WRONGPASSWORD\\?";
 
         public KeyChain()
         {
             _groups = new List<Group>();
             _filename = DefaultFilename;// "?\\NEWFILE\\?";
+            _currentGroup = null;
+            _currentKey = null;
         }
+
+        private string _password;
+
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; }
+        }
+
 
         public List<Group> Groups
         {

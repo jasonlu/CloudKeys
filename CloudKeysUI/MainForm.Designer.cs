@@ -65,12 +65,12 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._statusBar = new CloudKeysUI.StatusBar();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this._rtfDetailBox = new System.Windows.Forms.RichTextBox();
             this._groupsTree = new CloudKeysUI.GroupsTree();
             this._keyList = new CloudKeysUI.KeyList();
-            this._rtfDetailBox = new System.Windows.Forms.RichTextBox();
+            this._statusBar = new CloudKeysUI.StatusBar();
             this._toolbar.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -379,15 +379,6 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // _statusBar
-            // 
-            this._statusBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this._statusBar.Location = new System.Drawing.Point(0, 519);
-            this._statusBar.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this._statusBar.Name = "_statusBar";
-            this._statusBar.Size = new System.Drawing.Size(1073, 42);
-            this._statusBar.TabIndex = 1;
-            // 
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -425,6 +416,17 @@
             this.splitContainer2.SplitterDistance = 237;
             this.splitContainer2.TabIndex = 0;
             // 
+            // _rtfDetailBox
+            // 
+            this._rtfDetailBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._rtfDetailBox.Location = new System.Drawing.Point(0, 0);
+            this._rtfDetailBox.Margin = new System.Windows.Forms.Padding(0);
+            this._rtfDetailBox.Name = "_rtfDetailBox";
+            this._rtfDetailBox.ReadOnly = true;
+            this._rtfDetailBox.Size = new System.Drawing.Size(710, 220);
+            this._rtfDetailBox.TabIndex = 0;
+            this._rtfDetailBox.Text = "";
+            // 
             // _groupsTree
             // 
             this._groupsTree.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -457,15 +459,14 @@
             this._keyList.Size = new System.Drawing.Size(710, 235);
             this._keyList.TabIndex = 0;
             // 
-            // _rtfDetailBox
+            // _statusBar
             // 
-            this._rtfDetailBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._rtfDetailBox.Location = new System.Drawing.Point(0, 0);
-            this._rtfDetailBox.Name = "_rtfDetailBox";
-            this._rtfDetailBox.ReadOnly = true;
-            this._rtfDetailBox.Size = new System.Drawing.Size(710, 220);
-            this._rtfDetailBox.TabIndex = 0;
-            this._rtfDetailBox.Text = "";
+            this._statusBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this._statusBar.Location = new System.Drawing.Point(0, 519);
+            this._statusBar.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this._statusBar.Name = "_statusBar";
+            this._statusBar.Size = new System.Drawing.Size(1073, 42);
+            this._statusBar.TabIndex = 1;
             // 
             // MainForm
             // 

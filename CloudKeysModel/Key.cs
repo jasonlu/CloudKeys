@@ -1,16 +1,19 @@
 ﻿
+using System.Xml.Serialization;
 namespace CloudKeysModel
 {
     public class Key
     {
-
+        /*
         private Group _group;
 
+        [XmlIgnore]
         public Group Group
         {
             get { return _group; }
             set { _group = value; }
         }
+         */
 
         private string _title;
 
@@ -50,6 +53,18 @@ namespace CloudKeysModel
         {
             get { return _notes; }
             set { _notes = value; }
+        }
+
+        public Key Clone()
+        {
+            Key k = new Key();
+            k.Title = _title;
+            k.URL = _url;
+            k.Username = _username;
+            k.Password = _password;
+            k.Notes = _notes;
+            // k.Group = _group;
+            return k;
         }
 
     }

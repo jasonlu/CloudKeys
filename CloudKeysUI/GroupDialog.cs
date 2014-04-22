@@ -27,6 +27,18 @@ namespace CloudKeysUI
         {
             InitializeComponent();
             Application.Idle += OnIdle;
+            loadColors();
+        }
+
+        private void loadColors() {
+            foreach (System.Reflection.PropertyInfo prop in typeof(Color).GetProperties())
+            {
+                if (prop.PropertyType.FullName == "System.Drawing.Color")
+                {
+                    //ComboBoxItem item = new ComboBoxItem();
+                    _colorPicker.Items.Add(prop.Name);
+                }
+            }
         }
 
         void OnIdle(object sender, EventArgs e)
@@ -40,6 +52,14 @@ namespace CloudKeysUI
         private void _btnOk_Click(object sender, EventArgs e)
         {
             _group.Title = _textboxGroupName.Text;
+            if (_colorPicker.SelectedItem != null)
+            {
+                _group.Color = Color.FromName(_colorPicker.SelectedItem.ToString());
+            }
+            else
+            {
+                _group.Color = Color.Transparent;
+            }
             this.Tag = _group;
             DialogResult = DialogResult.OK;
         }

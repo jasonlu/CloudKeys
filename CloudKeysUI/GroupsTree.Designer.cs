@@ -53,7 +53,8 @@
             this._toolbarDeleteGroup});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(32, 510);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(30, 785);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -63,7 +64,7 @@
             this._toolbarNewGroup.Image = global::CloudKeysUI.Properties.Resources.Folder;
             this._toolbarNewGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._toolbarNewGroup.Name = "_toolbarNewGroup";
-            this._toolbarNewGroup.Size = new System.Drawing.Size(26, 28);
+            this._toolbarNewGroup.Size = new System.Drawing.Size(25, 28);
             this._toolbarNewGroup.Text = "toolStripButton1";
             this._toolbarNewGroup.Click += new System.EventHandler(this._toolbarNewGroup_Click);
             // 
@@ -74,7 +75,7 @@
             this._toolbarEditGroup.Image = global::CloudKeysUI.Properties.Resources.Folder_blue;
             this._toolbarEditGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._toolbarEditGroup.Name = "_toolbarEditGroup";
-            this._toolbarEditGroup.Size = new System.Drawing.Size(29, 28);
+            this._toolbarEditGroup.Size = new System.Drawing.Size(25, 28);
             this._toolbarEditGroup.Text = "toolStripButton2";
             this._toolbarEditGroup.Click += new System.EventHandler(this._toolbarEditGroup_Click);
             // 
@@ -85,7 +86,7 @@
             this._toolbarDeleteGroup.Image = global::CloudKeysUI.Properties.Resources.Delete;
             this._toolbarDeleteGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._toolbarDeleteGroup.Name = "_toolbarDeleteGroup";
-            this._toolbarDeleteGroup.Size = new System.Drawing.Size(29, 28);
+            this._toolbarDeleteGroup.Size = new System.Drawing.Size(25, 28);
             this._toolbarDeleteGroup.Text = "toolStripButton3";
             this._toolbarDeleteGroup.Click += new System.EventHandler(this._toolbarDeleteGroup_Click);
             // 
@@ -94,9 +95,10 @@
             this._treeview.ContextMenuStrip = this.contextMenuStrip1;
             this._treeview.Dock = System.Windows.Forms.DockStyle.Fill;
             this._treeview.LabelEdit = true;
-            this._treeview.Location = new System.Drawing.Point(32, 0);
+            this._treeview.Location = new System.Drawing.Point(30, 0);
+            this._treeview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._treeview.Name = "_treeview";
-            this._treeview.Size = new System.Drawing.Size(277, 510);
+            this._treeview.Size = new System.Drawing.Size(434, 785);
             this._treeview.TabIndex = 1;
             this._treeview.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this._treeview_AfterLabelEdit);
             this._treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this._treeview_AfterSelect);
@@ -110,7 +112,7 @@
             this.duplicateGroupToolStripMenuItem,
             this.deleteGroupToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 114);
             // 
             // copyGroupToolStripMenuItem
             // 
@@ -119,6 +121,7 @@
             this.copyGroupToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.copyGroupToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.copyGroupToolStripMenuItem.Text = "Copy group";
+            this.copyGroupToolStripMenuItem.Click += new System.EventHandler(this.copyGroupToolStripMenuItem_Click);
             // 
             // pasteGroupToolStripMenuItem
             // 
@@ -127,6 +130,7 @@
             this.pasteGroupToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.pasteGroupToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.pasteGroupToolStripMenuItem.Text = "Paste group";
+            this.pasteGroupToolStripMenuItem.Click += new System.EventHandler(this.pasteGroupToolStripMenuItem_Click);
             // 
             // duplicateGroupToolStripMenuItem
             // 
@@ -135,6 +139,7 @@
             this.duplicateGroupToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
             this.duplicateGroupToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.duplicateGroupToolStripMenuItem.Text = "Duplicate group";
+            this.duplicateGroupToolStripMenuItem.Click += new System.EventHandler(this.duplicateGroupToolStripMenuItem_Click);
             // 
             // deleteGroupToolStripMenuItem
             // 
@@ -142,16 +147,17 @@
             this.deleteGroupToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.deleteGroupToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.deleteGroupToolStripMenuItem.Text = "Delete group";
+            this.deleteGroupToolStripMenuItem.Click += new System.EventHandler(this.deleteGroupToolStripMenuItem_Click);
             // 
             // GroupsTree
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this._treeview);
             this.Controls.Add(this.toolStrip1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "GroupsTree";
-            this.Size = new System.Drawing.Size(309, 510);
-            this.Load += new System.EventHandler(this.GroupsTree_Load);
+            this.Size = new System.Drawing.Size(464, 785);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);

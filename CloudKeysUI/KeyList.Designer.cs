@@ -69,6 +69,10 @@
             this._listview.TabIndex = 0;
             this._listview.UseCompatibleStateImageBehavior = false;
             this._listview.View = System.Windows.Forms.View.Details;
+            this._listview.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this._listview_ColumnClick);
+            this._listview.ItemActivate += new System.EventHandler(this._listview_ItemActivate);
+            this._listview.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this._listview_ItemChecked);
+            this._listview.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this._listview_ItemSelectionChanged);
             // 
             // columnHeader1
             // 

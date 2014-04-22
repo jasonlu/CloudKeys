@@ -24,16 +24,23 @@ namespace CloudKeysController
             set { _keyChain = value; }
         }
 
-
         public List<Group> GetGroups()
         {
             return _keyChain.Groups;
+        }
+
+        public KeyChain NewKeyChain()
+        {
+            _keyChain = new KeyChain();
+            _keyChain.Saved = true;
+            return _keyChain;
         }
 
         public void AddGroup(Group g)
         {
             _keyChain.Groups.Add(g);
             _keyChain.CurrentGroup = g;
+            _keyChain.Saved = false;
         }
 
         public void DeleteGroup(Group g)
@@ -48,13 +55,44 @@ namespace CloudKeysController
             {
                 _keyChain.CurrentGroup = _keyChain.Groups[index];
             }
+            _keyChain.Saved = false;
         }
 
         public void EditGroup(Group g)
         {
-            //_keyChain.Groups
+            Group thisGroup = _keyChain.CurrentGroup;
+            int index = _keyChain.Groups.IndexOf(thisGroup);
+            _keyChain.Groups.Remove(thisGroup);
+            _keyChain.Groups.Insert(index, g);
+            _keyChain.Saved = false;
         }
 
+        public void DeleteKey(Key k)
+        {
+            DialogResult res = MessageBox.Show("Are you sure to delete this key: \n " + k.Title + "\nThis opration cannot be undone.", "Think twice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (res == DialogResult.Yes)
+            {
+                _keyChain.CurrentGroup.Keys.Remove(k);
+                _keyChain.CurrentKey = null;
+                _keyChain.CurrentKeys = null;
+                _keyChain.Saved = false;
+            }
+        }
+
+        public void DeleteKey(List<Key> keys)
+        {
+            DialogResult res = MessageBox.Show("Are you sure to delete " + keys.Count + " keys.\nThis opration cannot be undone.", "Think twice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (res == DialogResult.Yes)
+            {
+                foreach (Key k in keys)
+                {
+                    _keyChain.CurrentGroup.Keys.Remove(k);
+                }
+                _keyChain.CurrentKey = null;
+                _keyChain.CurrentKeys = null;
+                _keyChain.Saved = false;
+            }
+        }
 
         private Random _random = new Random((int)DateTime.Now.Ticks);
 
@@ -75,7 +113,20 @@ namespace CloudKeysController
         public string Save(bool saveAs = false)
         {
             string filename;
-            if (_keyChain.Filename == null || _keyChain.Filename == KeyChain.DefaultFilename || saveAs)
+            if (_keyChain.Password == null || _keyChain.Password == "" || saveAs)
+            {
+                PasswordDialog pd = new PasswordDialog();
+                if (pd.ShowDialog() == DialogResult.OK)
+                {
+                    _keyChain.Password = pd.Password;
+                }
+                else
+                {
+                    return "";
+                }
+                
+            }
+            if (_keyChain.Filename == null || _keyChain.Filename == "" || _keyChain.Filename == KeyChain.DefaultFilename || saveAs)
             {
                 SaveFileDialog d = new SaveFileDialog();
                 string exe = Assembly.GetExecutingAssembly().Location;
@@ -107,8 +158,6 @@ namespace CloudKeysController
             return filename;
         }
 
-
-
         public string Load()
         {
             OpenFileDialog d = new OpenFileDialog();
@@ -116,9 +165,13 @@ namespace CloudKeysController
             if (d.ShowDialog() != DialogResult.OK)
                 return "";
             string filename = d.FileName;
-            return Load(filename);
-        }
+            string resFilename;
+            while ((resFilename = Load(filename)) == KeyChain.WrongPassword)
+            {
 
+            }
+            return resFilename;
+        }
 
         public string Load(string filename)
         {
@@ -140,10 +193,36 @@ namespace CloudKeysController
                 ms.Position = 0;
 
                 KeyChain keychain = (KeyChain)serializer.ReadObject(ms);
-                _keyChain = keychain;
-                _keyChain.Filename = filename;
-                _keyChain.Saved = true;
-                return filename;
+                bool correctPassword = true;
+                if (keychain.Password != null && keychain.Password != "")
+                {
+                    PasswordDialog pd = new PasswordDialog();
+                    pd.Filename = filename;
+                    if (pd.ShowDialog() == DialogResult.OK)
+                    {
+                        if (pd.Password != keychain.Password)
+                        {
+                            correctPassword = false;
+                            MessageBox.Show("Wrong Password!", "Who are you?", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return KeyChain.WrongPassword;
+                        }
+                    }
+                    else
+                    {
+                        return KeyChain.WrongPassword;
+                    }
+                }
+                if (correctPassword)
+                {
+                    _keyChain = keychain;
+                    _keyChain.Filename = filename;
+                    _keyChain.Saved = true;
+                    return filename;
+                }
+                else
+                {
+                    return "";
+                }
             }
         }
     }

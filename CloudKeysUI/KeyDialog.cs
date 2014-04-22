@@ -54,6 +54,8 @@ namespace CloudKeysUI
             }
             else
             {
+                Key cloneKey = _key.Clone();
+                _key = cloneKey;
                 _tboxName.Text = _key.Title;
                 _tboxNotes.Text = _key.Notes;
                 _tboxPassword.Text = _key.Password;

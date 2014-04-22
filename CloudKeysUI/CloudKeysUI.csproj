@@ -66,6 +66,7 @@
     <Compile Include="KeyList.Designer.cs">
       <DependentUpon>KeyList.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListViewItemSorter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
