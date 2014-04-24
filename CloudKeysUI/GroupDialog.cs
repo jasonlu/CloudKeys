@@ -27,17 +27,54 @@ namespace CloudKeysUI
         {
             InitializeComponent();
             Application.Idle += OnIdle;
+            _colorPicker.DropDownStyle = ComboBoxStyle.DropDownList;
+            _colorPicker.MouseDown += _colorPicker_MouseDown;
             loadColors();
         }
+
+        void _colorPicker_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ColorDialog cd = new ColorDialog();
+                DialogResult r = cd.ShowDialog();
+                if (r == DialogResult.OK)
+                {
+                    int index = 0;
+                    Color c = cd.Color;
+                    index = _colorPicker.Items.IndexOf("OTHER");
+                    if (index == -1)
+                    {
+                        ComboBoxItem item = new ComboBoxItem();
+                        item.Text = "OTHER";
+                        item.Value = c.ToArgb();
+                        _colorPicker.Items.Insert(0, item);
+                        index = 0;
+                        
+                    }
+                    _colorPicker.SelectedItem = _colorPicker.Items[index];
+  
+                    //c.Name
+//                    _colorPicker.Select(index, 1);
+                }
+                
+            }
+            
+        }
+
 
         private void loadColors() {
             foreach (System.Reflection.PropertyInfo prop in typeof(Color).GetProperties())
             {
                 if (prop.PropertyType.FullName == "System.Drawing.Color")
                 {
-                    //ComboBoxItem item = new ComboBoxItem();
-                    _colorPicker.Items.Add(prop.Name);
+                    
+                    ComboBoxItem item = new ComboBoxItem();
+                    item.Text = prop.Name;
+                    item.Value = (Color.FromName(prop.Name)).ToArgb();
+                    _colorPicker.Items.Add(item);
                 }
+                _colorPicker.SelectedItem = _colorPicker.Items[0];
             }
         }
 
@@ -54,7 +91,8 @@ namespace CloudKeysUI
             _group.Title = _textboxGroupName.Text;
             if (_colorPicker.SelectedItem != null)
             {
-                _group.Color = Color.FromName(_colorPicker.SelectedItem.ToString());
+                int colorName = ((ComboBoxItem)_colorPicker.SelectedItem).Value;
+                _group.Color = Color.FromArgb(colorName);
             }
             else
             {
@@ -77,5 +115,17 @@ namespace CloudKeysUI
         {
             _textboxGroupName.Text = _mgr.RandomString(10);
         }
+    }
+}
+
+
+public class ComboBoxItem
+{
+    public string Text { get; set; }
+    public int Value { get; set; }
+
+    public override string ToString()
+    {
+        return Text;
     }
 }

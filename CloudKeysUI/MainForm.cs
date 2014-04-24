@@ -77,6 +77,7 @@ namespace CloudKeysUI
             {
                 return;
             }
+            _rtfDetailBox.Font = PreferencesMgr.Preference.Font;
             _rtfDetailBox.Text = "Title: \t\t" + k.Title + "\n" + 
                 "--------------------\n" +
                 "URL: \t\t" + k.URL + "\n" +
@@ -293,7 +294,8 @@ namespace CloudKeysUI
 
         private void _toolbarHelp_Click(object sender, EventArgs e)
         {
-
+            AboutForm f = new AboutForm();
+            f.ShowDialog();
         }
         #endregion
 

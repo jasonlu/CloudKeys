@@ -67,7 +67,7 @@ namespace CloudKeysUI
                 Key returnedKey = kd.Key;
                 if (k == null)
                 {
-                    _mgr.KeyChain.CurrentGroup.Keys.Add(returnedKey);
+                    _mgr.AddKey(returnedKey);
                 }
                 else
                 {
@@ -75,6 +75,7 @@ namespace CloudKeysUI
                     int index = g.Keys.IndexOf(k);
                     g.Keys.Remove(k);
                     g.Keys.Insert(index, returnedKey);
+                    _mgr.EditKey(k);
                 }
                 LoadKeys();
                 _mgr.KeyChain.CurrentKey = returnedKey;
@@ -101,6 +102,7 @@ namespace CloudKeysUI
             {
                 _toobarDeleteKeys.Enabled = _toolbarEditKey.Enabled = true;
             }
+            _listview.Font = PreferencesMgr.Preference.Font;
         }
 
         #region Toolbar Event Handlers

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MDIParentForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,8 +43,12 @@
             this._menuitemWindowTileVertically = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemWindowCascade = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemWindowOpenedWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuitemTools = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuitemToolPreference = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.myNotificationIcno = new System.Windows.Forms.NotifyIcon(this.components);
+            this.recentFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,11 +57,11 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.windowToolStripMenuItem,
+            this._menuitemTools,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(1150, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(767, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -65,12 +70,13 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuitemFileNew,
             this._menuitemFileOpen,
+            this.recentFilesToolStripMenuItem,
             this._menuitemFileSaveAll,
             this.toolStripSeparator1,
             this._menuitemFileCloseAll,
             this._menuitemFileExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 19);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // _menuitemFileNew
@@ -127,7 +133,7 @@
             this._menuitemWindowCascade,
             this._menuitemWindowOpenedWindow});
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 19);
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.windowToolStripMenuItem.Text = "Window";
             // 
             // _menuitemWindowTileHorizontally
@@ -161,34 +167,69 @@
             this._menuitemWindowOpenedWindow.Size = new System.Drawing.Size(163, 22);
             this._menuitemWindowOpenedWindow.Text = "Opened Window";
             // 
+            // _menuitemTools
+            // 
+            this._menuitemTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuitemToolPreference});
+            this._menuitemTools.Name = "_menuitemTools";
+            this._menuitemTools.Size = new System.Drawing.Size(48, 20);
+            this._menuitemTools.Text = "Tools";
+            this._menuitemTools.Click += new System.EventHandler(this._menuitemTools_Click);
+            // 
+            // _menuitemToolPreference
+            // 
+            this._menuitemToolPreference.Name = "_menuitemToolPreference";
+            this._menuitemToolPreference.Size = new System.Drawing.Size(135, 22);
+            this._menuitemToolPreference.Text = "Preferences";
+            this._menuitemToolPreference.Click += new System.EventHandler(this._menuitemToolPreference_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuitemHelpAbout});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 19);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // _menuitemHelpAbout
             // 
             this._menuitemHelpAbout.Name = "_menuitemHelpAbout";
-            this._menuitemHelpAbout.Size = new System.Drawing.Size(152, 22);
+            this._menuitemHelpAbout.Size = new System.Drawing.Size(107, 22);
             this._menuitemHelpAbout.Text = "About";
             this._menuitemHelpAbout.Click += new System.EventHandler(this._menuitemHelpAbout_Click);
             // 
+            // myNotificationIcno
+            // 
+            this.myNotificationIcno.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.myNotificationIcno.BalloonTipText = "CloudKey App is not yet close.";
+            this.myNotificationIcno.BalloonTipTitle = "Still here.";
+            this.myNotificationIcno.Icon = ((System.Drawing.Icon)(resources.GetObject("myNotificationIcno.Icon")));
+            this.myNotificationIcno.Text = "notifyIcon1";
+            this.myNotificationIcno.Visible = true;
+            this.myNotificationIcno.DoubleClick += new System.EventHandler(this.myNotificationIcno_DoubleClick);
+            // 
+            // recentFilesToolStripMenuItem
+            // 
+            this.recentFilesToolStripMenuItem.Name = "recentFilesToolStripMenuItem";
+            this.recentFilesToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.recentFilesToolStripMenuItem.Text = "Recent Files";
+            // 
             // MDIParentForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AllowDrop = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1150, 738);
+            this.ClientSize = new System.Drawing.Size(767, 480);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MDIParentForm";
             this.Text = "CloudKeys";
+            this.Load += new System.EventHandler(this.MDIParentForm_Load);
             this.MdiChildActivate += new System.EventHandler(this.MDIParentForm_MdiChildActivate);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.OnDragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -213,5 +254,9 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _menuitemHelpAbout;
         private System.Windows.Forms.ToolStripMenuItem _menuitemFileCloseAll;
+        private System.Windows.Forms.ToolStripMenuItem _menuitemTools;
+        private System.Windows.Forms.ToolStripMenuItem _menuitemToolPreference;
+        private System.Windows.Forms.NotifyIcon myNotificationIcno;
+        private System.Windows.Forms.ToolStripMenuItem recentFilesToolStripMenuItem;
     }
 }

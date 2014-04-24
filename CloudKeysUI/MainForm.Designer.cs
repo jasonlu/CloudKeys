@@ -62,8 +62,6 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemViewShowToolbar = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemViewShowStatusbar = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._menuitemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -161,9 +159,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.viewToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this._menuitemHelpAbout});
+            this.viewToolStripMenuItem
+            });
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
@@ -358,20 +355,6 @@
             this._menuitemViewShowStatusbar.Text = "Show Statusbar";
             this._menuitemViewShowStatusbar.Click += new System.EventHandler(this._menuitemViewShowStatusbar_Click);
             // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 19);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // _menuitemHelpAbout
-            // 
-            this._menuitemHelpAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this._menuitemHelpAbout.Name = "_menuitemHelpAbout";
-            this._menuitemHelpAbout.Size = new System.Drawing.Size(44, 19);
-            this._menuitemHelpAbout.Text = "Help";
-            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Image = global::CloudKeysUI.Properties.Resources.Help;
@@ -507,8 +490,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem _menuitemHelpAbout;
         private System.Windows.Forms.ToolStripButton _toolbarNewFile;
         private System.Windows.Forms.ToolStripButton _toolbarOpenFile;
         private System.Windows.Forms.ToolStripButton _toolbarSave;

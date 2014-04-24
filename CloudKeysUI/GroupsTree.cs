@@ -51,6 +51,7 @@ namespace CloudKeysUI
                 copyGroupToolStripMenuItem.Enabled =
                 duplicateGroupToolStripMenuItem.Enabled = true;
             }
+            _treeview.Font = PreferencesMgr.Preference.Font;
         }
 
 
@@ -80,6 +81,7 @@ namespace CloudKeysUI
                 e.Node.Text = e.Label;
                 Group g = (Group)e.Node.Tag;
                 g.Title = e.Node.Text;
+                _mgr.EditGroup(g);
                 _mgr.KeyChain.Saved = false;
             }
             else
@@ -111,6 +113,7 @@ namespace CloudKeysUI
                 {
                     _treeview.SelectedNode.Text = newGroup.Title;
                     _treeview.SelectedNode.BackColor = newGroup.Color;
+                    _mgr.EditGroup(newGroup);
                 }
                 _mgr.KeyChain.Saved = false;
             }

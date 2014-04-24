@@ -16,6 +16,7 @@ namespace CloudKeysController
         public KeyChainMgr()
         {
             _keyChain = new KeyChain();
+            Histories = new List<History>();
         }
 
         public KeyChain KeyChain
@@ -29,6 +30,8 @@ namespace CloudKeysController
             return _keyChain.Groups;
         }
 
+        public List<History> Histories { get; set; }
+
         public KeyChain NewKeyChain()
         {
             _keyChain = new KeyChain();
@@ -36,11 +39,21 @@ namespace CloudKeysController
             return _keyChain;
         }
 
+        private void newHistory(string text, CloudKeysModel.Action type)
+        {
+            History h = new History(this);
+            h.Action = type;
+            h.Description = text;
+            h.Commit();
+            Histories.Add(h);
+        }
+
         public void AddGroup(Group g)
         {
             _keyChain.Groups.Add(g);
             _keyChain.CurrentGroup = g;
             _keyChain.Saved = false;
+            newHistory("Add Group: " + g.Title, CloudKeysModel.Action.Create);
         }
 
         public void DeleteGroup(Group g)
@@ -56,15 +69,17 @@ namespace CloudKeysController
                 _keyChain.CurrentGroup = _keyChain.Groups[index];
             }
             _keyChain.Saved = false;
+            newHistory("Delete Group: " + g.Title, CloudKeysModel.Action.Delete);
         }
 
         public void EditGroup(Group g)
         {
-            Group thisGroup = _keyChain.CurrentGroup;
-            int index = _keyChain.Groups.IndexOf(thisGroup);
-            _keyChain.Groups.Remove(thisGroup);
-            _keyChain.Groups.Insert(index, g);
+            //Group thisGroup = _keyChain.CurrentGroup;
+            //int index = _keyChain.Groups.IndexOf(thisGroup);
+            //_keyChain.Groups.Remove(thisGroup);
+            //_keyChain.Groups.Insert(index, g);
             _keyChain.Saved = false;
+            newHistory("Edit Group: " + g.Title, CloudKeysModel.Action.Update);
         }
 
         public void DeleteKey(Key k)
@@ -76,6 +91,7 @@ namespace CloudKeysController
                 _keyChain.CurrentKey = null;
                 _keyChain.CurrentKeys = null;
                 _keyChain.Saved = false;
+                newHistory("Delete Key: " + k.Title, CloudKeysModel.Action.Delete);
             }
         }
 
@@ -91,8 +107,32 @@ namespace CloudKeysController
                 _keyChain.CurrentKey = null;
                 _keyChain.CurrentKeys = null;
                 _keyChain.Saved = false;
+                newHistory("Delete " + keys.Count + " Keys: " + keys, CloudKeysModel.Action.Delete);
             }
         }
+
+
+        public void AddKey(Key k)
+        { 
+           _keyChain.CurrentGroup.Keys.Add(k);
+           _keyChain.CurrentKey = k;
+           _keyChain.CurrentKeys = new List<Key>();
+           _keyChain.CurrentKeys.Add(k);
+           _keyChain.Saved = false;
+           newHistory("Add Key: " + k.Title, CloudKeysModel.Action.Create);
+        }
+
+        public void EditKey(Key k)
+        {
+            _keyChain.CurrentKey = k;
+            _keyChain.CurrentKeys = new List<Key>();
+            _keyChain.CurrentKeys.Add(k);
+            _keyChain.Saved = false;
+            newHistory("Edit Key: " + k.Title, CloudKeysModel.Action.Update);
+        }
+
+
+        
 
         private Random _random = new Random((int)DateTime.Now.Ticks);
 
@@ -198,16 +238,8 @@ namespace CloudKeysController
                 {
                     PasswordDialog pd = new PasswordDialog();
                     pd.Filename = filename;
-                    if (pd.ShowDialog() == DialogResult.OK)
-                    {
-                        if (pd.Password != keychain.Password)
-                        {
-                            correctPassword = false;
-                            MessageBox.Show("Wrong Password!", "Who are you?", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return KeyChain.WrongPassword;
-                        }
-                    }
-                    else
+                    pd.RealPassword = keychain.Password;
+                    if (pd.ShowDialog() == DialogResult.Abort)
                     {
                         return KeyChain.WrongPassword;
                     }
@@ -217,6 +249,17 @@ namespace CloudKeysController
                     _keyChain = keychain;
                     _keyChain.Filename = filename;
                     _keyChain.Saved = true;
+                    int limit = PreferencesMgr.Preference.RecentFileLimit;
+                    if (limit > PreferencesMgr.Preference.RecentFiles.Count)
+                    {
+                        PreferencesMgr.Preference.RecentFiles.Add(filename);
+                    }
+                    else
+                    {
+                        PreferencesMgr.Preference.RecentFiles.Add(filename);
+                        PreferencesMgr.Preference.RecentFiles.RemoveAt(0);
+                    }
+                    PreferencesMgr.SaveFile();
                     return filename;
                 }
                 else

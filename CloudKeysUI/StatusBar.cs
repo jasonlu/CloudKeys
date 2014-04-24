@@ -9,6 +9,7 @@ namespace CloudKeysUI
     {
         private int _groupCount = 0;
         private int _keyCount = 0;
+        private int _historyCount = 0;
         Group _currentGroup = null;
         List<Key> _currentKeys = new List<Key>();
 
@@ -68,6 +69,17 @@ namespace CloudKeysUI
                     _selectedKeys.Text = _currentKeys.Count + " Of " + _keyCount + " Selected";
                 }
             }
+
+            if (_historyCount < _mgr.Histories.Count)
+            {
+                for (int i = _historyCount; i < _mgr.Histories.Count; i++)
+                {
+                    History h = _mgr.Histories[i];
+                    _historyBox.Items.Insert(0, h.At + "  " + h.Description);
+                    _historyCount++;
+                }
+                _historyBox.SelectedIndex = 0;
+            }
         }
 
         void Application_Idle(object sender, EventArgs e)
@@ -78,6 +90,11 @@ namespace CloudKeysUI
         private void _clockTicker_Tick(object sender, EventArgs e)
         {
             _currentTime.Text = DateTime.Now.ToString();
+        }
+
+        private void _historyBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
