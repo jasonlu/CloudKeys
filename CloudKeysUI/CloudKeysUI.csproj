@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DropNet, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DropNet.1.9.6\lib\net40\DropNet.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -47,6 +55,12 @@
     </Compile>
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CloudFileBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CloudFileBrowser.Designer.cs">
+      <DependentUpon>CloudFileBrowser.cs</DependentUpon>
     </Compile>
     <Compile Include="GroupDialog.cs">
       <SubType>Form</SubType>
@@ -108,6 +122,9 @@
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CloudFileBrowser.resx">
+      <DependentUpon>CloudFileBrowser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GroupDialog.resx">
       <DependentUpon>GroupDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,6 +155,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\Entry1.ico" />
   </ItemGroup>
   <ItemGroup>

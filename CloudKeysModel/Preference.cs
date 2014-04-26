@@ -16,6 +16,33 @@ namespace CloudKeysModel
     [Serializable]
     public class Preference
     {
+
+        private bool _saveToCloud = true;
+        [DisplayName("Save files to Cloud(DropBox)")]
+        public bool SaveToCloud
+        {
+            get { return _saveToCloud; }
+            set { _saveToCloud = value; }
+        }
+
+
+        private string _token = "";
+        [Browsable(false)]
+        public string DropBoxToken
+        {
+            get { return _token; }
+            set { _token = value; }
+        }
+
+        private string _secret = "";
+        [Browsable(false)]
+        public string DropBoxSecret
+        {
+            get { return _secret; }
+            set { _secret = value; }
+        }
+
+
         private List<string> _recentFiles = new List<string>();
 
         [Browsable(false)]

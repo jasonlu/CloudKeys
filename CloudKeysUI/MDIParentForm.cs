@@ -1,44 +1,36 @@
 ﻿using CloudKeysController;
 using CloudKeysModel;
+using DropNet;
+using DropNet.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace CloudKeysUI
 {
     public partial class MDIParentForm : Form
     {
+        const string _ext = ".kcf";
         List<MainForm> _openedWindow = new List<MainForm>();
         List<string> _openedFiles = new List<string>();
-        public List<string> OpenedFiles {
+        public List<string> OpenedFiles
+        {
             get { return _openedFiles; }
         }
 
         const FormWindowState DefaultState = FormWindowState.Maximized;
         FormWindowState _windowState = DefaultState;
+        
         public MDIParentForm()
         {
             InitializeComponent();
             this.AllowDrop = true;
             Application.Idle += Application_Idle;
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Resize += MDIParentForm_Resize;
+            this.Resize += OnResize;
 
-        }
-
-        void MDIParentForm_Resize(object sender, EventArgs e)
-        {
-            if (FormWindowState.Minimized == this.WindowState && PreferencesMgr.Preference.TrayIcon)
-            {
-                myNotificationIcno.Visible = true;
-
-                myNotificationIcno.ShowBalloonTip(500);
-                this.ShowInTaskbar = false;
-            }
-            else
-            {
-
-            }
         }
 
         private void BringFormToFront(MainForm f)
@@ -59,10 +51,49 @@ namespace CloudKeysUI
             f.Focus();
         }
 
-        private void NewWindow(string filename = "")
+        private void NewCloud(string url = "")
         {
-            if(_openedFiles.Contains(filename)) {
-                int index = _openedFiles.IndexOf(filename);
+            MainForm f = new MainForm();
+            f.WindowState = _windowState;
+            f.MdiParent = this;
+            _openedWindow.Add(f);
+            if (url != "")
+            {
+                _openedFiles.Add(url);
+            }
+            else
+            {
+                _openedFiles.Add("");
+            }
+            if (_windowState != DefaultState)
+            {
+                f.StartPosition = FormStartPosition.Manual;
+                f.Location = new System.Drawing.Point(_openedWindow.Count * 10, _openedWindow.Count * 10);
+            }
+            ToolStripMenuItem windowItem = new ToolStripMenuItem();
+            if (url != "")
+            {
+                f.KeyChainMgr.Open(url);
+            }
+            else
+            {
+                f.KeyChainMgr.NewKeyChain();
+            }
+
+            f.InitUI();
+            f.Show();
+        }
+
+        
+/*
+        private void NewWindow(string filename = "", string filenameInCloud = "")
+        {
+            string displayName = filenameInCloud == "" ? filename : filenameInCloud;
+            displayName = displayName == "" ? "UNTITLED" : displayName;
+
+            if (_openedFiles.Contains(displayName))
+            {
+                int index = _openedFiles.IndexOf(displayName);
                 BringFormToFront(_openedWindow[index]);
                 return;
             }
@@ -71,7 +102,7 @@ namespace CloudKeysUI
             f.WindowState = _windowState;
             f.MdiParent = this;
             _openedWindow.Add(f);
-            _openedFiles.Add(filename);
+            _openedFiles.Add(displayName);
             if (_windowState != DefaultState)
             {
                 f.StartPosition = FormStartPosition.Manual;
@@ -79,32 +110,77 @@ namespace CloudKeysUI
             }
             ToolStripMenuItem windowItem = new ToolStripMenuItem();
 
-            if (filename == "")
+            if (filenameInCloud != "")
             {
-                f.Text = "untitled";
+                resFilename = f.OpenFile(filename, filenameInCloud);
             }
             else
             {
-                resFilename = f.OpenFile(filename);
-                
+                if (filename == "")
+                {
+                    f.Text = "untitled" + DateTime.Now.ToString();
+                }
+                else
+                {
+                    resFilename = f.OpenFile(filename);
+                }
             }
-            if (resFilename == CloudKeysModel.KeyChain.WrongPassword)
-            {
 
-            }
-            else
+            if (resFilename != CloudKeysModel.KeyChain.WrongPassword)
             {
-                windowItem.Text = f.Text;
+                f.Text = displayName;
+                windowItem.Text = displayName;
                 windowItem.Tag = f;
                 windowItem.Click += _menuitemWindowOpenedItem_Click;
                 _menuitemWindowOpenedWindow.DropDown.Items.Add(windowItem);
-                f.FormClosing += ChildClosing;
+                f.FormClosing += OnChildClosing;
                 f.Show();
             }
         }
+        */
+        private void OpenLocalFiles()
+        {
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.Filter = "KCF Documents (*" + _ext + ")|*" + _ext + "";
+            fd.Multiselect = true;
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                if (fd.FileNames.Length > 1)
+                {
+                    _windowState = FormWindowState.Normal;
+                }
+                foreach (string path in fd.FileNames)
+                {
+                    NewCloud(path);
+                }
+                _windowState = DefaultState;
+            }
+        }
+
+        private void OpenCloudFiles()
+        {
+            var meta = DropboxMgr.Client.Search(_ext);
+            List<string> files = new List<string>();
+            foreach (MetaData d in meta)
+            {
+                files.Add(d.Path);
+            }
+            CloudFileBrowser f = new CloudFileBrowser();
+            f.Files = files;
+            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                //string filename = f.Filename;
+                NewCloud("dropbox://" + f.Filename);
+
+                //string tgtPath = DropboxMgr.DownloadFileFromCloud(filename);
+                //NewWindow(tgtPath, filename);                
+            }
+        }
+
+        
 
         #region Event Handlers
-        void Application_Idle(object sender, EventArgs e)
+        private void Application_Idle(object sender, EventArgs e)
         {
             if (_openedWindow.Count > 0)
             {
@@ -126,7 +202,17 @@ namespace CloudKeysUI
 
         }
 
-        private void ChildClosing(object sender, FormClosingEventArgs e)
+        private void OnResize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == this.WindowState && PreferencesMgr.Preference.TrayIcon)
+            {
+                myNotificationIcno.Visible = true;
+                myNotificationIcno.ShowBalloonTip(500);
+                this.ShowInTaskbar = false;
+            }
+        }
+
+        private void OnChildClosing(object sender, FormClosingEventArgs e)
         {
             MainForm f = (MainForm)sender;
             int index = _openedWindow.IndexOf(f);
@@ -135,7 +221,7 @@ namespace CloudKeysUI
             _menuitemWindowOpenedWindow.DropDown.Items.RemoveAt(index);
         }
 
-        void OnDragEnter(object sender, DragEventArgs e)
+        private void OnDragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -151,23 +237,105 @@ namespace CloudKeysUI
             }
         }
 
-        void OnDrop(object sender, DragEventArgs e)
+        private void OnDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (string file in files)
             {
-                if (file.ToLower().EndsWith(".kcf"))
+                if (file.ToLower().EndsWith(_ext))
                 {
-                    NewWindow(file);
+                    NewCloud(file);
                 }
             }
         }
+
+        private void OnLoad(object sender, EventArgs e)
+        {
+            PreferencesMgr.LoadFile();
+            foreach (string filename in PreferencesMgr.Preference.RecentFiles) {
+            ToolStripMenuItem recentFiles = new ToolStripMenuItem();
+                recentFiles.Text = filename;
+                string realFilename = "";
+                if (filename.Contains("dropbox://"))
+                {
+                    realFilename = filename.Substring(filename.IndexOf("/") + 2);
+                } else
+                {
+                    realFilename = filename;
+                }
+                recentFiles.Tag = realFilename;
+                recentFiles.Click += OnFileRecentFiles;
+                _menuitemFileRecentFiles.DropDown.Items.Add(recentFiles);
+                
+            }
+            if (PreferencesMgr.Preference.DropBoxToken != "")
+            {
+                DropboxMgr.init(PreferencesMgr.Preference.DropBoxToken, PreferencesMgr.Preference.DropBoxSecret);
+            }
+            else
+            {
+                if (DropboxMgr.DoOAuth() == DialogResult.OK)
+                {
+                    var accessToken = DropboxMgr.Client.GetAccessToken();
+                    PreferencesMgr.Preference.DropBoxToken = accessToken.Token;
+                    PreferencesMgr.Preference.DropBoxSecret = accessToken.Secret;
+                    PreferencesMgr.SaveFile();
+                    DropboxMgr.Client.UserLogin = new UserLogin() { Token = PreferencesMgr.Preference.DropBoxToken, Secret = PreferencesMgr.Preference.DropBoxSecret };
+                }
+            }
+
+            
+        }
+
         #region Menu Item Event Handlers
         #region Menu Item Files Event Handlers
-        private void _menuitemFileNew_Click(object sender, EventArgs e)
+        private void OnFileNew(object sender, EventArgs e)
         {
-            NewWindow("");
+            NewCloud("");
         }
+
+        private void OnFileOpen(object sender, EventArgs e)
+        {
+            if (PreferencesMgr.Preference.SaveToCloud)
+            {
+                OpenCloudFiles();
+            }
+            else
+            {
+                OpenLocalFiles();
+            }
+        }
+
+        private void OnFileSaveAll(object sender, EventArgs e)
+        {
+            foreach (MainForm f in _openedWindow)
+            {
+                f.SaveFile();
+            }
+        }
+
+        private void OnFileCloseAll(object sender, EventArgs e)
+        {
+            foreach (Form f in this.MdiChildren)
+            {
+                f.Close();
+            }
+        }
+
+        private void OnFileRecentFiles(object sender, EventArgs e)
+        {
+            ToolStripMenuItem me = (ToolStripMenuItem)sender;
+            NewCloud(me.Text);
+        }
+
+        private void OnFileExit(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        #endregion
+
+        #region Menu Item Window Event Handlers
 
         private void _menuitemWindowOpenedItem_Click(object sender, EventArgs e)
         {
@@ -176,52 +344,6 @@ namespace CloudKeysUI
             BringFormToFront(f);
         }
 
-        
-
-        private void _menuitemFileOpen_Click(object sender, EventArgs e)
-        {
-
-            OpenFileDialog fd = new OpenFileDialog();
-            fd.Filter = "KCF Documents (*.kcf)|*.kcf";
-            fd.Multiselect = true;
-            if (fd.ShowDialog() == DialogResult.OK)
-            {
-                if (fd.FileNames.Length > 1)
-                {
-                    _windowState = FormWindowState.Normal;
-                }
-                foreach (string path in fd.FileNames)
-                {
-                    NewWindow(path);
-                }
-                _windowState = DefaultState;
-            }
-        }
-
-        private void _menuitemFileSaveAll_Click(object sender, EventArgs e)
-        {
-            foreach (MainForm f in _openedWindow)
-            {
-                f.SaveFile();
-            }
-        }
-
-        private void _menuitemFileCloseAll_Click(object sender, EventArgs e)
-        {
-            foreach (Form f in this.MdiChildren)
-            {
-                f.Close();
-            }
-        }
-
-        private void _menuitemFileExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        #endregion
-
-        #region Menu Item Window Event Handlers
         private void tileHorizontallyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.TileHorizontal);
@@ -245,41 +367,23 @@ namespace CloudKeysUI
             f.ShowDialog();
         }
         #endregion
+
+        private void OnToolPreference(object sender, EventArgs e)
+        {
+            PreferencesForm f = new PreferencesForm();
+            f.ShowDialog();
+        }
         
         #endregion
 
-        private void MDIParentForm_MdiChildActivate(object sender, EventArgs e)
-        {
-            Console.Write("Childrens: " + this.MdiChildren.Length.ToString());
-        }
-
-        private void MDIParentForm_Load(object sender, EventArgs e)
-        {
-            PreferencesMgr.LoadFile();
-        }
-
-        private void myNotificationIcno_DoubleClick(object sender, EventArgs e)
+        private void OnNotificationIconDoubleClick(object sender, EventArgs e)
         {
             myNotificationIcno.Visible = false;
             this.ShowInTaskbar = true;
             this.WindowState = FormWindowState.Normal;
             this.Focus();
-            //this.BringToFront();
-        }
-
-        private void _menuitemTools_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void _menuitemToolPreference_Click(object sender, EventArgs e)
-        {
-            PreferencesForm f = new PreferencesForm();
-            f.ShowDialog();
         }
         #endregion
 
-            
- 
     }
 }

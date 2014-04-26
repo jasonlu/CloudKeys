@@ -48,7 +48,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.myNotificationIcno = new System.Windows.Forms.NotifyIcon(this.components);
-            this.recentFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuitemFileRecentFiles = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,7 +70,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._menuitemFileNew,
             this._menuitemFileOpen,
-            this.recentFilesToolStripMenuItem,
+            this._menuitemFileRecentFiles,
             this._menuitemFileSaveAll,
             this.toolStripSeparator1,
             this._menuitemFileCloseAll,
@@ -85,7 +85,7 @@
             this._menuitemFileNew.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this._menuitemFileNew.Size = new System.Drawing.Size(210, 22);
             this._menuitemFileNew.Text = "New";
-            this._menuitemFileNew.Click += new System.EventHandler(this._menuitemFileNew_Click);
+            this._menuitemFileNew.Click += new System.EventHandler(this.OnFileNew);
             // 
             // _menuitemFileOpen
             // 
@@ -93,7 +93,7 @@
             this._menuitemFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this._menuitemFileOpen.Size = new System.Drawing.Size(210, 22);
             this._menuitemFileOpen.Text = "Open";
-            this._menuitemFileOpen.Click += new System.EventHandler(this._menuitemFileOpen_Click);
+            this._menuitemFileOpen.Click += new System.EventHandler(this.OnFileOpen);
             // 
             // _menuitemFileSaveAll
             // 
@@ -103,7 +103,7 @@
             | System.Windows.Forms.Keys.S)));
             this._menuitemFileSaveAll.Size = new System.Drawing.Size(210, 22);
             this._menuitemFileSaveAll.Text = "Save All";
-            this._menuitemFileSaveAll.Click += new System.EventHandler(this._menuitemFileSaveAll_Click);
+            this._menuitemFileSaveAll.Click += new System.EventHandler(this.OnFileSaveAll);
             // 
             // toolStripSeparator1
             // 
@@ -115,7 +115,7 @@
             this._menuitemFileCloseAll.Name = "_menuitemFileCloseAll";
             this._menuitemFileCloseAll.Size = new System.Drawing.Size(210, 22);
             this._menuitemFileCloseAll.Text = "Close All";
-            this._menuitemFileCloseAll.Click += new System.EventHandler(this._menuitemFileCloseAll_Click);
+            this._menuitemFileCloseAll.Click += new System.EventHandler(this.OnFileCloseAll);
             // 
             // _menuitemFileExit
             // 
@@ -123,7 +123,7 @@
             this._menuitemFileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this._menuitemFileExit.Size = new System.Drawing.Size(210, 22);
             this._menuitemFileExit.Text = "Exit";
-            this._menuitemFileExit.Click += new System.EventHandler(this._menuitemFileExit_Click);
+            this._menuitemFileExit.Click += new System.EventHandler(this.OnFileExit);
             // 
             // windowToolStripMenuItem
             // 
@@ -174,14 +174,13 @@
             this._menuitemTools.Name = "_menuitemTools";
             this._menuitemTools.Size = new System.Drawing.Size(48, 20);
             this._menuitemTools.Text = "Tools";
-            this._menuitemTools.Click += new System.EventHandler(this._menuitemTools_Click);
             // 
             // _menuitemToolPreference
             // 
             this._menuitemToolPreference.Name = "_menuitemToolPreference";
             this._menuitemToolPreference.Size = new System.Drawing.Size(135, 22);
             this._menuitemToolPreference.Text = "Preferences";
-            this._menuitemToolPreference.Click += new System.EventHandler(this._menuitemToolPreference_Click);
+            this._menuitemToolPreference.Click += new System.EventHandler(this.OnToolPreference);
             // 
             // helpToolStripMenuItem
             // 
@@ -206,13 +205,13 @@
             this.myNotificationIcno.Icon = ((System.Drawing.Icon)(resources.GetObject("myNotificationIcno.Icon")));
             this.myNotificationIcno.Text = "notifyIcon1";
             this.myNotificationIcno.Visible = true;
-            this.myNotificationIcno.DoubleClick += new System.EventHandler(this.myNotificationIcno_DoubleClick);
+            this.myNotificationIcno.DoubleClick += new System.EventHandler(this.OnNotificationIconDoubleClick);
             // 
             // recentFilesToolStripMenuItem
             // 
-            this.recentFilesToolStripMenuItem.Name = "recentFilesToolStripMenuItem";
-            this.recentFilesToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.recentFilesToolStripMenuItem.Text = "Recent Files";
+            this._menuitemFileRecentFiles.Name = "_menuitemFileRecentFiles";
+            this._menuitemFileRecentFiles.Size = new System.Drawing.Size(210, 22);
+            this._menuitemFileRecentFiles.Text = "Recent Files";
             // 
             // MDIParentForm
             // 
@@ -226,8 +225,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MDIParentForm";
             this.Text = "CloudKeys";
-            this.Load += new System.EventHandler(this.MDIParentForm_Load);
-            this.MdiChildActivate += new System.EventHandler(this.MDIParentForm_MdiChildActivate);
+            this.Load += new System.EventHandler(this.OnLoad);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.OnDragEnter);
             this.menuStrip1.ResumeLayout(false);
@@ -257,6 +255,6 @@
         private System.Windows.Forms.ToolStripMenuItem _menuitemTools;
         private System.Windows.Forms.ToolStripMenuItem _menuitemToolPreference;
         private System.Windows.Forms.NotifyIcon myNotificationIcno;
-        private System.Windows.Forms.ToolStripMenuItem recentFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _menuitemFileRecentFiles;
     }
 }

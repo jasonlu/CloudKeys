@@ -15,6 +15,13 @@ namespace CloudKeysUI
             get { return this._keyChainMgr; }
         }
 
+        public void InitUI()
+        {
+            _rtfDetailBox.Text = "";
+            _groupsTree.LoadGroups();
+            _keyList.LoadKeys();
+        }
+
         public KeyList KeyList
         {
             get { return _keyList; }
@@ -47,6 +54,8 @@ namespace CloudKeysUI
             _keyList.MainForm = this;
             _statusBar.KeyChainMgr = _keyChainMgr;
             _statusBar.MainForm = this;
+            _menuitemFileNew.Visible = false;
+            _menuitemFileOpen.Visible = false;
             Application.Idle += Application_Idle;
         }
 
@@ -87,21 +96,21 @@ namespace CloudKeysUI
             _rtfDetailBox.Tag = k;
         }
 
-        public string OpenFile(string filename)
+        public string OpenFile(string url, string filenameInCloud = "")
         {
             if (promptToSave() == DialogResult.Yes)
             {
-                filename = _keyChainMgr.Load(filename);
-                if (filename == "")
+                url = _keyChainMgr.Open(url);
+                if (url == "")
                 {
                     // Do nothing...
                 }
                 else
                 {
                     _groupsTree.LoadGroups();
-                    this.Text = filename;
+                    this.Text = url;
                 }
-                return filename;
+                return url;
             }
             return "";
         }
@@ -125,7 +134,7 @@ namespace CloudKeysUI
         {
             if (promptToSave() == DialogResult.Yes)
             {
-                string filename = _keyChainMgr.Load();
+                string filename = "";// _keyChainMgr.Load();
                 if (filename == "")
                 {
                     // Do nothing...

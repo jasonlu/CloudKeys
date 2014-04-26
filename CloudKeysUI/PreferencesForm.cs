@@ -16,9 +16,6 @@ namespace CloudKeysUI
     {
         Preference _preference = new Preference();
 
-        private bool _trayIcon = false;
-        private string _fontname = "Arial";
-
         public PreferencesForm()
         {
             InitializeComponent();

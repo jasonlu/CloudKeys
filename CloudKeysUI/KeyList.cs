@@ -48,6 +48,10 @@ namespace CloudKeysUI
         public void LoadKeys()
         {
             _listview.Items.Clear();
+            if (_mgr.KeyChain.CurrentGroup == null)
+            {
+                return;
+            }
             List<Key> keys = _mgr.KeyChain.CurrentGroup.Keys;
             foreach (Key k in keys)
             {

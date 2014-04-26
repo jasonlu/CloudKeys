@@ -6,11 +6,15 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
 using System.Runtime.Serialization;
+using DropNet;
+using DropNet.Models;
+
 
 namespace CloudKeysController
 {
     public class KeyChainMgr
     {
+        // Save to dropbox here...
         private KeyChain _keyChain;
 
         public KeyChainMgr()
@@ -111,7 +115,6 @@ namespace CloudKeysController
             }
         }
 
-
         public void AddKey(Key k)
         { 
            _keyChain.CurrentGroup.Keys.Add(k);
@@ -130,10 +133,7 @@ namespace CloudKeysController
             _keyChain.Saved = false;
             newHistory("Edit Key: " + k.Title, CloudKeysModel.Action.Update);
         }
-
-
         
-
         private Random _random = new Random((int)DateTime.Now.Ticks);
 
         public string RandomString(int size)
@@ -149,10 +149,8 @@ namespace CloudKeysController
             return builder.ToString();
         }
 
-
         public string Save(bool saveAs = false)
         {
-            string filename;
             if (_keyChain.Password == null || _keyChain.Password == "" || saveAs)
             {
                 PasswordDialog pd = new PasswordDialog();
@@ -164,109 +162,86 @@ namespace CloudKeysController
                 {
                     return "";
                 }
-                
             }
-            if (_keyChain.Filename == null || _keyChain.Filename == "" || _keyChain.Filename == KeyChain.DefaultFilename || saveAs)
-            {
-                SaveFileDialog d = new SaveFileDialog();
-                string exe = Assembly.GetExecutingAssembly().Location;
-                d.InitialDirectory = Path.GetDirectoryName(exe);
-                d.RestoreDirectory = true;
-                d.AddExtension = true;
-                d.Filter = "KCF Documents (*.kcf)|*.kcf";
-                if (d.ShowDialog() != DialogResult.OK)
-                    return "";
-                _keyChain.Filename = d.FileName;
-            }
-            filename = _keyChain.Filename;
-
-            // Ask to set the password.
-            // If the DialogResult == DialogResult.Cancel.
-            // Show error message.
-            // return ""; // Means no password is given, will not save file.
 
             MemoryStream ms = new MemoryStream();
             DataContractSerializer serializer = new DataContractSerializer(typeof(KeyChain));
-
             serializer.WriteObject(ms, _keyChain);
-            byte[] plainBytes = new byte[ms.Length];
-            Array.Copy(ms.GetBuffer(), plainBytes, plainBytes.Length);
-            byte[] encryptedBytes = CryptoHelper.Encrypt(plainBytes);
-
-            File.WriteAllBytes(filename, encryptedBytes);
-            _keyChain.Saved = true;
-            return filename;
-        }
-
-        public string Load()
-        {
-            OpenFileDialog d = new OpenFileDialog();
-            d.Filter = "KCF Documents (*.kcf)|*.kcf";
-            if (d.ShowDialog() != DialogResult.OK)
-                return "";
-            string filename = d.FileName;
-            string resFilename;
-            while ((resFilename = Load(filename)) == KeyChain.WrongPassword)
+            
+            if (PreferencesMgr.Preference.SaveToCloud)
             {
-
+                DropboxMgr.WriteToCloud(_keyChain.Filename, ms.ToArray());                
             }
-            return resFilename;
+            else {
+                if (_keyChain.Filename == "" || _keyChain.Filename == KeyChain.DefaultFilename || saveAs)
+                {
+                    SaveFileDialog d = new SaveFileDialog();
+                    string exe = Assembly.GetExecutingAssembly().Location;
+                    d.InitialDirectory = Path.GetDirectoryName(exe);
+                    d.RestoreDirectory = true;
+                    d.AddExtension = true;
+                    d.Filter = "KCF Documents (*.kcf)|*.kcf";
+                    if (d.ShowDialog() != DialogResult.OK)
+                        return "";
+                    _keyChain.Filename = d.FileName;
+                } else {
+
+                }
+                byte[] cipherBytes = CryptoHelper.Encrypt(ms.ToArray());
+                File.WriteAllBytes(_keyChain.Filename, cipherBytes);
+            }
+            _keyChain.Saved = true;
+            return _keyChain.Filename;
         }
 
-        public string Load(string filename)
+        public string Open(string path)
         {
-            _keyChain = new KeyChain();
-            DataContractSerializer serializer = new DataContractSerializer(typeof(KeyChain));
-
-            byte[] encryptedBytes = File.ReadAllBytes(filename);
-            byte[] plainBytes = CryptoHelper.Decrypt(encryptedBytes);
-
-            using (MemoryStream ms = new MemoryStream())
+            byte[] data;
+            if (path.StartsWith("dropbox://"))
             {
-                ms.Write(plainBytes, 0, plainBytes.Length);
-                ms.Position = 0;
-                ms.Flush();
+                string url = path.Substring(path.LastIndexOf("://") + 3);
+                data = DropboxMgr.ReadFileFromCloud(url);
+            }
+            else
+            {
+                OpenFileDialog d = new OpenFileDialog();
+                d.Filter = "KCF Documents (*.kcf)|*.kcf";
+                if (d.ShowDialog() != DialogResult.OK)
+                    return "";
+                data = File.ReadAllBytes(d.FileName);
+            }
 
-                StreamReader sr = new StreamReader(ms);
-                string res = sr.ReadToEnd();
-                Console.WriteLine(res);
-                ms.Position = 0;
-
-                KeyChain keychain = (KeyChain)serializer.ReadObject(ms);
-                bool correctPassword = true;
-                if (keychain.Password != null && keychain.Password != "")
+            DataContractSerializer serializer = new DataContractSerializer(typeof(KeyChain));
+            MemoryStream ms = new MemoryStream(data);
+            KeyChain keychain = (KeyChain)serializer.ReadObject(ms);
+            if (keychain.Password != null && keychain.Password != "")
+            {
+                PasswordDialog pd = new PasswordDialog();
+                pd.Filename = path;
+                pd.RealPassword = keychain.Password;
+                if (pd.ShowDialog() == DialogResult.Abort)
                 {
-                    PasswordDialog pd = new PasswordDialog();
-                    pd.Filename = filename;
-                    pd.RealPassword = keychain.Password;
-                    if (pd.ShowDialog() == DialogResult.Abort)
-                    {
-                        return KeyChain.WrongPassword;
-                    }
+                    return KeyChain.WrongPassword;
                 }
-                if (correctPassword)
+            }
+            _keyChain = keychain;
+            _keyChain.Filename = path;
+            _keyChain.Saved = true;
+            int limit = PreferencesMgr.Preference.RecentFileLimit;
+            if (!PreferencesMgr.Preference.RecentFiles.Contains(path))
+            {
+                if (limit > PreferencesMgr.Preference.RecentFiles.Count)
                 {
-                    _keyChain = keychain;
-                    _keyChain.Filename = filename;
-                    _keyChain.Saved = true;
-                    int limit = PreferencesMgr.Preference.RecentFileLimit;
-                    if (limit > PreferencesMgr.Preference.RecentFiles.Count)
-                    {
-                        PreferencesMgr.Preference.RecentFiles.Add(filename);
-                    }
-                    else
-                    {
-                        PreferencesMgr.Preference.RecentFiles.Add(filename);
-                        PreferencesMgr.Preference.RecentFiles.RemoveAt(0);
-                    }
-                    PreferencesMgr.SaveFile();
-                    return filename;
+                    PreferencesMgr.Preference.RecentFiles.Add(path);
                 }
                 else
                 {
-                    return "";
+                    PreferencesMgr.Preference.RecentFiles.Add(path);
+                    PreferencesMgr.Preference.RecentFiles.RemoveAt(0);
                 }
             }
+            PreferencesMgr.SaveFile();
+            return path;
         }
     }
 }
