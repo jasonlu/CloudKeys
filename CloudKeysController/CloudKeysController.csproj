@@ -57,6 +57,12 @@
   <ItemGroup>
     <Compile Include="CryptoHelper.cs" />
     <Compile Include="DropboxMgr.cs" />
+    <Compile Include="FilenameDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FilenameDialog.Designer.cs">
+      <DependentUpon>FilenameDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="KeyChainMgr.cs" />
     <Compile Include="PasswordDialog.cs">
       <SubType>Form</SubType>
@@ -74,6 +80,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FilenameDialog.resx">
+      <DependentUpon>FilenameDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PasswordDialog.resx">
       <DependentUpon>PasswordDialog.cs</DependentUpon>
     </EmbeddedResource>

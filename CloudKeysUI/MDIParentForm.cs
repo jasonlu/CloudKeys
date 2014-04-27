@@ -22,7 +22,7 @@ namespace CloudKeysUI
 
         const FormWindowState DefaultState = FormWindowState.Maximized;
         FormWindowState _windowState = DefaultState;
-        
+
         public MDIParentForm()
         {
             InitializeComponent();
@@ -79,65 +79,63 @@ namespace CloudKeysUI
             {
                 f.KeyChainMgr.NewKeyChain();
             }
-
             f.InitUI();
             f.Show();
         }
 
-        
-/*
-        private void NewWindow(string filename = "", string filenameInCloud = "")
-        {
-            string displayName = filenameInCloud == "" ? filename : filenameInCloud;
-            displayName = displayName == "" ? "UNTITLED" : displayName;
-
-            if (_openedFiles.Contains(displayName))
-            {
-                int index = _openedFiles.IndexOf(displayName);
-                BringFormToFront(_openedWindow[index]);
-                return;
-            }
-            MainForm f = new MainForm();
-            string resFilename = "";
-            f.WindowState = _windowState;
-            f.MdiParent = this;
-            _openedWindow.Add(f);
-            _openedFiles.Add(displayName);
-            if (_windowState != DefaultState)
-            {
-                f.StartPosition = FormStartPosition.Manual;
-                f.Location = new System.Drawing.Point(_openedWindow.Count * 10, _openedWindow.Count * 10);
-            }
-            ToolStripMenuItem windowItem = new ToolStripMenuItem();
-
-            if (filenameInCloud != "")
-            {
-                resFilename = f.OpenFile(filename, filenameInCloud);
-            }
-            else
-            {
-                if (filename == "")
+        /*
+                private void NewWindow(string filename = "", string filenameInCloud = "")
                 {
-                    f.Text = "untitled" + DateTime.Now.ToString();
-                }
-                else
-                {
-                    resFilename = f.OpenFile(filename);
-                }
-            }
+                    string displayName = filenameInCloud == "" ? filename : filenameInCloud;
+                    displayName = displayName == "" ? "UNTITLED" : displayName;
 
-            if (resFilename != CloudKeysModel.KeyChain.WrongPassword)
-            {
-                f.Text = displayName;
-                windowItem.Text = displayName;
-                windowItem.Tag = f;
-                windowItem.Click += _menuitemWindowOpenedItem_Click;
-                _menuitemWindowOpenedWindow.DropDown.Items.Add(windowItem);
-                f.FormClosing += OnChildClosing;
-                f.Show();
-            }
-        }
-        */
+                    if (_openedFiles.Contains(displayName))
+                    {
+                        int index = _openedFiles.IndexOf(displayName);
+                        BringFormToFront(_openedWindow[index]);
+                        return;
+                    }
+                    MainForm f = new MainForm();
+                    string resFilename = "";
+                    f.WindowState = _windowState;
+                    f.MdiParent = this;
+                    _openedWindow.Add(f);
+                    _openedFiles.Add(displayName);
+                    if (_windowState != DefaultState)
+                    {
+                        f.StartPosition = FormStartPosition.Manual;
+                        f.Location = new System.Drawing.Point(_openedWindow.Count * 10, _openedWindow.Count * 10);
+                    }
+                    ToolStripMenuItem windowItem = new ToolStripMenuItem();
+
+                    if (filenameInCloud != "")
+                    {
+                        resFilename = f.OpenFile(filename, filenameInCloud);
+                    }
+                    else
+                    {
+                        if (filename == "")
+                        {
+                            f.Text = "untitled" + DateTime.Now.ToString();
+                        }
+                        else
+                        {
+                            resFilename = f.OpenFile(filename);
+                        }
+                    }
+
+                    if (resFilename != CloudKeysModel.KeyChain.WrongPassword)
+                    {
+                        f.Text = displayName;
+                        windowItem.Text = displayName;
+                        windowItem.Tag = f;
+                        windowItem.Click += _menuitemWindowOpenedItem_Click;
+                        _menuitemWindowOpenedWindow.DropDown.Items.Add(windowItem);
+                        f.FormClosing += OnChildClosing;
+                        f.Show();
+                    }
+                }
+                */
         private void OpenLocalFiles()
         {
             OpenFileDialog fd = new OpenFileDialog();
@@ -177,14 +175,14 @@ namespace CloudKeysUI
             }
         }
 
-        
+
 
         #region Event Handlers
         private void Application_Idle(object sender, EventArgs e)
         {
             if (_openedWindow.Count > 0)
             {
-                _menuitemFileSaveAll.Enabled = 
+                _menuitemFileSaveAll.Enabled =
                 _menuitemWindowCascade.Enabled =
                 _menuitemWindowTileHorizontally.Enabled =
                 _menuitemWindowTileVertically.Enabled =
@@ -192,7 +190,7 @@ namespace CloudKeysUI
             }
             else
             {
-                _menuitemFileSaveAll.Enabled = 
+                _menuitemFileSaveAll.Enabled =
                 _menuitemWindowCascade.Enabled =
                 _menuitemWindowTileHorizontally.Enabled =
                 _menuitemWindowTileVertically.Enabled =
@@ -252,21 +250,23 @@ namespace CloudKeysUI
         private void OnLoad(object sender, EventArgs e)
         {
             PreferencesMgr.LoadFile();
-            foreach (string filename in PreferencesMgr.Preference.RecentFiles) {
-            ToolStripMenuItem recentFiles = new ToolStripMenuItem();
+            foreach (string filename in PreferencesMgr.Preference.RecentFiles)
+            {
+                ToolStripMenuItem recentFiles = new ToolStripMenuItem();
                 recentFiles.Text = filename;
                 string realFilename = "";
                 if (filename.Contains("dropbox://"))
                 {
                     realFilename = filename.Substring(filename.IndexOf("/") + 2);
-                } else
+                }
+                else
                 {
                     realFilename = filename;
                 }
                 recentFiles.Tag = realFilename;
                 recentFiles.Click += OnFileRecentFiles;
                 _menuitemFileRecentFiles.DropDown.Items.Add(recentFiles);
-                
+
             }
             if (PreferencesMgr.Preference.DropBoxToken != "")
             {
@@ -274,6 +274,7 @@ namespace CloudKeysUI
             }
             else
             {
+                DropboxMgr.Client.GetToken();
                 if (DropboxMgr.DoOAuth() == DialogResult.OK)
                 {
                     var accessToken = DropboxMgr.Client.GetAccessToken();
@@ -284,7 +285,7 @@ namespace CloudKeysUI
                 }
             }
 
-            
+
         }
 
         #region Menu Item Event Handlers
@@ -373,7 +374,7 @@ namespace CloudKeysUI
             PreferencesForm f = new PreferencesForm();
             f.ShowDialog();
         }
-        
+
         #endregion
 
         private void OnNotificationIconDoubleClick(object sender, EventArgs e)
@@ -384,6 +385,7 @@ namespace CloudKeysUI
             this.Focus();
         }
         #endregion
+
 
     }
 }

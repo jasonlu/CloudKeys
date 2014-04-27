@@ -46,7 +46,7 @@
             this._btnOk.TabIndex = 20;
             this._btnOk.Text = "OK";
             this._btnOk.UseVisualStyleBackColor = true;
-            this._btnOk.Click += new System.EventHandler(this._btnOk_Click);
+            this._btnOk.Click += new System.EventHandler(this.OnOK);
             // 
             // _btnCancel
             // 
@@ -90,7 +90,7 @@
             this._btnTest.TabIndex = 10;
             this._btnTest.Text = "Test";
             this._btnTest.UseVisualStyleBackColor = true;
-            this._btnTest.Click += new System.EventHandler(this._btnTest_Click);
+            this._btnTest.Click += new System.EventHandler(this.OnTest);
             // 
             // _colorPicker
             // 
@@ -122,7 +122,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GroupDialog";
-            this.Load += new System.EventHandler(this.GroupDialog_Load);
+            this.Load += new System.EventHandler(this.OnLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 

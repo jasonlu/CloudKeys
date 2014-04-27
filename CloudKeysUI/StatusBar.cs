@@ -10,7 +10,6 @@ namespace CloudKeysUI
         private int _groupCount = 0;
         private int _keyCount = 0;
         private int _historyCount = 0;
-        Group _currentGroup = null;
         List<Key> _currentKeys = new List<Key>();
 
 

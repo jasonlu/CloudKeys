@@ -12,6 +12,13 @@ namespace CloudKeysController
 {
     public partial class PasswordDialog : Form
     {
+        private bool _newPassword = false;
+
+        public bool NewPassword
+        {
+            get { return _newPassword; }
+            set { _newPassword = value; }
+        }
 
         private string _realPassword;
 
@@ -37,7 +44,6 @@ namespace CloudKeysController
             set { _filename = value; }
         }
 
-
         public PasswordDialog()
         {
             InitializeComponent();
@@ -56,10 +62,10 @@ namespace CloudKeysController
             }
         }
 
-        private void _btnOK_Click(object sender, EventArgs e)
+        private void OnOk(object sender, EventArgs e)
         {
             _password = _txtPassword.Text;
-            if (_password != _realPassword)
+            if (_password != _realPassword && !_newPassword)
             {
                 MessageBox.Show("Wrong Password!", "Who are you?", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _txtPassword.SelectAll();
@@ -72,7 +78,7 @@ namespace CloudKeysController
 
         private void PasswordDialog_Shown(object sender, EventArgs e)
         {
-            lblFilename.Text = _filename.Substring(_filename.LastIndexOf("\\") + 1);
+            _lblFilename.Text = _filename.Substring(_filename.LastIndexOf("\\") + 1);
         }
 
         private void _btnCancel_Click(object sender, EventArgs e)
@@ -80,6 +86,15 @@ namespace CloudKeysController
             DialogResult = DialogResult.Abort;
         }
 
-        
+        private void OnLoad(object sender, EventArgs e)
+        {
+            if (_newPassword)
+            {
+                _lblFilename.Visible = false;
+
+            }
+        }
+
+
     }
 }

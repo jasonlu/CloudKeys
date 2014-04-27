@@ -66,7 +66,7 @@
             this._toolbarNewGroup.Name = "_toolbarNewGroup";
             this._toolbarNewGroup.Size = new System.Drawing.Size(25, 28);
             this._toolbarNewGroup.Text = "toolStripButton1";
-            this._toolbarNewGroup.Click += new System.EventHandler(this._toolbarNewGroup_Click);
+            this._toolbarNewGroup.Click += new System.EventHandler(this.OnGroupNew);
             // 
             // _toolbarEditGroup
             // 
@@ -77,7 +77,7 @@
             this._toolbarEditGroup.Name = "_toolbarEditGroup";
             this._toolbarEditGroup.Size = new System.Drawing.Size(25, 28);
             this._toolbarEditGroup.Text = "toolStripButton2";
-            this._toolbarEditGroup.Click += new System.EventHandler(this._toolbarEditGroup_Click);
+            this._toolbarEditGroup.Click += new System.EventHandler(this.OnGroupEdit);
             // 
             // _toolbarDeleteGroup
             // 
@@ -88,7 +88,7 @@
             this._toolbarDeleteGroup.Name = "_toolbarDeleteGroup";
             this._toolbarDeleteGroup.Size = new System.Drawing.Size(25, 28);
             this._toolbarDeleteGroup.Text = "toolStripButton3";
-            this._toolbarDeleteGroup.Click += new System.EventHandler(this._toolbarDeleteGroup_Click);
+            this._toolbarDeleteGroup.Click += new System.EventHandler(this.OnGroupDelete);
             // 
             // _treeview
             // 
@@ -100,9 +100,9 @@
             this._treeview.Name = "_treeview";
             this._treeview.Size = new System.Drawing.Size(434, 785);
             this._treeview.TabIndex = 1;
-            this._treeview.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this._treeview_AfterLabelEdit);
-            this._treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this._treeview_AfterSelect);
-            this._treeview.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this._treeview_NodeMouseDoubleClick);
+            this._treeview.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.OnTreeviewAfterLabelEdit);
+            this._treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnTreeviewAfterSelect);
+            this._treeview.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.OnTreeviewNodeDoubleClick);
             // 
             // contextMenuStrip1
             // 
@@ -121,7 +121,7 @@
             this.copyGroupToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.copyGroupToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.copyGroupToolStripMenuItem.Text = "Copy group";
-            this.copyGroupToolStripMenuItem.Click += new System.EventHandler(this.copyGroupToolStripMenuItem_Click);
+            this.copyGroupToolStripMenuItem.Click += new System.EventHandler(this.OnGroupCopy);
             // 
             // pasteGroupToolStripMenuItem
             // 
@@ -130,7 +130,7 @@
             this.pasteGroupToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.pasteGroupToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.pasteGroupToolStripMenuItem.Text = "Paste group";
-            this.pasteGroupToolStripMenuItem.Click += new System.EventHandler(this.pasteGroupToolStripMenuItem_Click);
+            this.pasteGroupToolStripMenuItem.Click += new System.EventHandler(this.OnGroupPaste);
             // 
             // duplicateGroupToolStripMenuItem
             // 
@@ -139,7 +139,7 @@
             this.duplicateGroupToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
             this.duplicateGroupToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.duplicateGroupToolStripMenuItem.Text = "Duplicate group";
-            this.duplicateGroupToolStripMenuItem.Click += new System.EventHandler(this.duplicateGroupToolStripMenuItem_Click);
+            this.duplicateGroupToolStripMenuItem.Click += new System.EventHandler(this.OnGroupDuplicate);
             // 
             // deleteGroupToolStripMenuItem
             // 
@@ -147,7 +147,7 @@
             this.deleteGroupToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.deleteGroupToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.deleteGroupToolStripMenuItem.Text = "Delete group";
-            this.deleteGroupToolStripMenuItem.Click += new System.EventHandler(this.deleteGroupToolStripMenuItem_Click);
+            this.deleteGroupToolStripMenuItem.Click += new System.EventHandler(this.OnGroupDelete);
             // 
             // GroupsTree
             // 

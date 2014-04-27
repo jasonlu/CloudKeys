@@ -28,11 +28,11 @@ namespace CloudKeysUI
             InitializeComponent();
             Application.Idle += OnIdle;
             _colorPicker.DropDownStyle = ComboBoxStyle.DropDownList;
-            _colorPicker.MouseDown += _colorPicker_MouseDown;
-            loadColors();
+            _colorPicker.MouseDown += OnColorPickerMouseDown;
+            LoadColors();
         }
 
-        void _colorPicker_MouseDown(object sender, MouseEventArgs e)
+        void OnColorPickerMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -50,25 +50,26 @@ namespace CloudKeysUI
                         item.Value = c.ToArgb();
                         _colorPicker.Items.Insert(0, item);
                         index = 0;
-                        
+
                     }
                     _colorPicker.SelectedItem = _colorPicker.Items[index];
-  
+
                     //c.Name
-//                    _colorPicker.Select(index, 1);
+                    //                    _colorPicker.Select(index, 1);
                 }
-                
+
             }
-            
+
         }
 
 
-        private void loadColors() {
+        private void LoadColors()
+        {
             foreach (System.Reflection.PropertyInfo prop in typeof(Color).GetProperties())
             {
                 if (prop.PropertyType.FullName == "System.Drawing.Color")
                 {
-                    
+
                     ComboBoxItem item = new ComboBoxItem();
                     item.Text = prop.Name;
                     item.Value = (Color.FromName(prop.Name)).ToArgb();
@@ -86,7 +87,7 @@ namespace CloudKeysUI
                 _btnOk.Enabled = true;
         }
 
-        private void _btnOk_Click(object sender, EventArgs e)
+        private void OnOK(object sender, EventArgs e)
         {
             _group.Title = _textboxGroupName.Text;
             if (_colorPicker.SelectedItem != null)
@@ -96,24 +97,38 @@ namespace CloudKeysUI
             }
             else
             {
-                _group.Color = Color.Transparent;
+                _group.Color = Color.Black;
             }
             this.Tag = _group;
             DialogResult = DialogResult.OK;
         }
 
-        private void GroupDialog_Load(object sender, EventArgs e)
+        private void OnLoad(object sender, EventArgs e)
         {
             if (_group == null)
             {
                 _group = new Group();
             }
             _textboxGroupName.Text = _group.Title;
+            int colorArgbValue = _group.Color.ToArgb();
+            int index = 0;
+            foreach (ComboBoxItem i in _colorPicker.Items)
+            {
+                if (i.Value == colorArgbValue)
+                {
+                    index = _colorPicker.Items.IndexOf(i);
+                    break;
+                }
+            }
+            _colorPicker.SelectedIndex = index;
         }
 
-        private void _btnTest_Click(object sender, EventArgs e)
+        private void OnTest(object sender, EventArgs e)
         {
             _textboxGroupName.Text = _mgr.RandomString(10);
+            Random ran = new Random((int)DateTime.Now.Ticks);
+            int randomIndex = ran.Next(_colorPicker.Items.Count);
+            _colorPicker.SelectedIndex = randomIndex;
         }
     }
 }

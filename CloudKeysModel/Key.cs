@@ -1,7 +1,9 @@
 ﻿
+using System;
 using System.Xml.Serialization;
 namespace CloudKeysModel
 {
+    [Serializable]
     public class Key
     {
         /*

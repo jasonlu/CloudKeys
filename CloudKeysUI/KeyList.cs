@@ -14,9 +14,7 @@ namespace CloudKeysUI
 {
     public partial class KeyList : UserControl
     {
-
         private ListViewColumnSorter _sorter;
-
 
         private MainForm _mainForm;
 
@@ -25,7 +23,6 @@ namespace CloudKeysUI
             get { return _mainForm; }
             set { _mainForm = value; }
         }
-        
 
         private KeyChainMgr _mgr;
 
@@ -42,7 +39,16 @@ namespace CloudKeysUI
             _mgr = new KeyChainMgr();
             _sorter = new ListViewColumnSorter();
             _listview.ListViewItemSorter = _sorter;
-  
+            _listview.LostFocus += OnListviewLostFocus;
+
+        }
+
+        void OnListviewLostFocus(object sender, EventArgs e)
+        {
+            /*
+            _mgr.KeyChain.CurrentKeys = null;
+            _mgr.KeyChain.CurrentKey = null;
+             */
         }
 
         public void LoadKeys()
@@ -62,9 +68,21 @@ namespace CloudKeysUI
             _mgr.KeyChain.CurrentKey = null;
         }
 
-        public void ShowKeyDialog(Key k = null)
+        public void LoadKeys(List<Key> keys)
         {
-            KeyDialog kd = new KeyDialog();
+            _listview.Items.Clear();
+            foreach (Key k in keys)
+            {
+                ListViewItem item = new ListViewItem(new string[] { k.Title, k.URL, k.Username, k.Password });
+                item.Tag = k;
+                _listview.Items.Add(item);
+            }
+            _mgr.KeyChain.CurrentKey = null;
+        }
+
+        public void OpenKeyDialog(Key k = null)
+        {
+            KeyDialog kd = new KeyDialog(_mainForm);
             kd.Key = k;
             if (kd.ShowDialog() == DialogResult.OK)
             {
@@ -75,11 +93,7 @@ namespace CloudKeysUI
                 }
                 else
                 {
-                    Group g = _mgr.KeyChain.CurrentGroup;
-                    int index = g.Keys.IndexOf(k);
-                    g.Keys.Remove(k);
-                    g.Keys.Insert(index, returnedKey);
-                    _mgr.EditKey(k);
+                    _mgr.EditKey(returnedKey);
                 }
                 LoadKeys();
                 _mgr.KeyChain.CurrentKey = returnedKey;
@@ -100,30 +114,41 @@ namespace CloudKeysUI
             }
             if (_listview.SelectedItems.Count == 0)
             {
-                _toobarDeleteKeys.Enabled = _toolbarEditKey.Enabled = false;
+                _contextMenuCopyKeys.Enabled =
+                _contextMenuDeleteKeys.Enabled =
+                _contextMenuDuplicateKeys.Enabled =
+                _contextMenuNewKey.Enabled =
+                _toobarDeleteKeys.Enabled =
+                _toolbarEditKey.Enabled = false;
             }
             else
             {
-                _toobarDeleteKeys.Enabled = _toolbarEditKey.Enabled = true;
+                _contextMenuCopyKeys.Enabled =
+                _contextMenuDeleteKeys.Enabled =
+                _contextMenuDuplicateKeys.Enabled =
+                _contextMenuCopyKeys.Enabled =
+                _contextMenuNewKey.Enabled =
+                _toobarDeleteKeys.Enabled =
+                _toolbarEditKey.Enabled = true;
             }
             _listview.Font = PreferencesMgr.Preference.Font;
         }
 
         #region Toolbar Event Handlers
-        private void _toolbarNewKey_Click(object sender, EventArgs e)
+        private void OnKeyNew(object sender, EventArgs e)
         {
-            ShowKeyDialog();
+            OpenKeyDialog();
             _listview.Select();
         }
 
-        private void _toolbarEditKey_Click(object sender, EventArgs e)
+        private void OnKeyEdit(object sender, EventArgs e)
         {
             Key k = (Key)_listview.SelectedItems[0].Tag;
-            ShowKeyDialog(k);
+            OpenKeyDialog(k);
             _listview.Select();
         }
 
-        private void _toobarDeleteKeys_Click(object sender, EventArgs e)
+        private void OnKeyDelete(object sender, EventArgs e)
         {
             if (_listview.SelectedItems.Count > 1)
             {
@@ -140,42 +165,69 @@ namespace CloudKeysUI
                 Key k = (Key)_listview.SelectedItems[0].Tag;
                 _mgr.DeleteKey(k);
             }
-            
+
             LoadKeys();
+        }
+
+        private void OnFind(object sender, EventArgs e)
+        {
+            string keyword = _txtKeyword.Text;
+            List<Key> foundKeys = new List<Key>();
+            foundKeys = _mgr.SearchKey(keyword);
+            //_mainForm.GroupsTree.LoadGroups();
+            _mgr.KeyChain.CurrentGroup = null;
+            LoadKeys(foundKeys);
+        }
+
+        private void OnTxtKeywordKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                OnFind(sender, e);
+            }
         }
         #endregion
 
-        private void _listview_ItemActivate(object sender, EventArgs e)
+        private void OnListviewItemActivate(object sender, EventArgs e)
         {
             ListView _lv = ((ListView)sender);
             Key k = (Key)_lv.SelectedItems[0].Tag;
-            ShowKeyDialog(k);
+            List<Key> keys = new List<Key>();
+            keys.Add(k);
+            _mgr.KeyChain.CurrentKey = k;
+            _mgr.KeyChain.CurrentKeys = keys;
+            OpenKeyDialog(k);
         }
 
-        private void _listview_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
-          
-        }
-       
-
-        private void _listview_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private void OnListviewItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             List<Key> keys = new List<Key>();
             foreach (ListViewItem i in _listview.SelectedItems)
             {
                 keys.Add((Key)i.Tag);
             }
-
-            _mgr.KeyChain.CurrentKeys = keys;
-            if(e.IsSelected)
+            if (keys.Count == 0)
+            {
+                _mgr.KeyChain.CurrentKey = null;
+                _mgr.KeyChain.CurrentKeys = null;
+            }
+            else
+            {
+                _mgr.KeyChain.CurrentKeys = keys;
+            }
+            if (e.IsSelected)
             {
                 Key k = (Key)e.Item.Tag;
                 _mgr.KeyChain.CurrentKey = k;
                 _mainForm.UpdateDetail(k);
             }
+            else
+            {
+                _mgr.KeyChain.CurrentKeys = null;
+            }
         }
 
-        private void _listview_ColumnClick(object sender, ColumnClickEventArgs e)
+        private void OnListviewColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Determine if clicked column is already the column that is being sorted.
             if (e.Column == _sorter.SortColumn)
@@ -199,11 +251,77 @@ namespace CloudKeysUI
 
             // Perform the sort with these new sort options.
             _listview.Sort();
+            _mgr.KeyChain.CurrentKey = null;
+            _mgr.KeyChain.CurrentKeys = null;
         }
-
-      
         #endregion
 
-        
+        private void OnKeyCopy(object sender, EventArgs e)
+        {
+            List<Key> keys = new List<Key>();
+
+            for (int i = 0; i < _listview.SelectedItems.Count; i++)
+            {
+                keys.Add((Key)_listview.SelectedItems[i].Tag);
+            }
+
+            //Lets say its my data format
+            string format = "KeyChainKeys";
+            Clipboard.Clear();
+            //Set data to clipboard
+            Clipboard.SetData(format, keys);
+            _contextMenuPasteKeys.Enabled = true;
+        }
+
+        private void OnKeyPaste(object sender, EventArgs e)
+        {
+            Group g = _mgr.KeyChain.CurrentGroup;
+            if (g == null)
+            {
+                MessageBox.Show("Plase select a group");
+                return;
+            }
+            //Get data from clipboard
+            List<Key> keys = new List<Key>();
+            string format = "KeyChainKeys";
+            if (Clipboard.ContainsData(format))
+            {
+                keys = (List<Key>)Clipboard.GetData(format);
+            }
+            if (keys == null)
+            {
+                MessageBox.Show("No Keys in Clipboard.");
+                return;
+            }
+            foreach (Key k in keys)
+            {
+                //Key key = new Key();
+                _mgr.AddKey(k.Clone());
+            }
+            LoadKeys();
+            _mgr.KeyChain.CurrentKey = keys.Last();
+            _mgr.KeyChain.CurrentKeys = keys;
+        }
+
+        private void OnKeyDuplicate(object sender, EventArgs e)
+        {
+            Key thisKey = _mgr.KeyChain.CurrentKey;
+            if (thisKey == null)
+            {
+                return;
+            }
+            Key k = thisKey.Clone();
+            List<Key> keys = new List<Key>();
+            _mgr.AddKey(k);
+            LoadKeys();
+
+            _mgr.KeyChain.CurrentKey = k;
+            _mgr.KeyChain.CurrentKeys = keys;
+        }
+
+        internal void ClearKeys()
+        {
+            _listview.Items.Clear();
+        }
     }
 }

@@ -34,6 +34,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemFileNew = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemFileOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this._menuitemFileRecentFiles = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemFileSaveAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this._menuitemFileCloseAll = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,8 +49,11 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._menuitemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.myNotificationIcno = new System.Windows.Forms.NotifyIcon(this.components);
-            this._menuitemFileRecentFiles = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -94,6 +98,12 @@
             this._menuitemFileOpen.Size = new System.Drawing.Size(210, 22);
             this._menuitemFileOpen.Text = "Open";
             this._menuitemFileOpen.Click += new System.EventHandler(this.OnFileOpen);
+            // 
+            // _menuitemFileRecentFiles
+            // 
+            this._menuitemFileRecentFiles.Name = "_menuitemFileRecentFiles";
+            this._menuitemFileRecentFiles.Size = new System.Drawing.Size(210, 22);
+            this._menuitemFileRecentFiles.Text = "Recent Files";
             // 
             // _menuitemFileSaveAll
             // 
@@ -202,16 +212,33 @@
             this.myNotificationIcno.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.myNotificationIcno.BalloonTipText = "CloudKey App is not yet close.";
             this.myNotificationIcno.BalloonTipTitle = "Still here.";
+            this.myNotificationIcno.ContextMenuStrip = this.contextMenuStrip1;
             this.myNotificationIcno.Icon = ((System.Drawing.Icon)(resources.GetObject("myNotificationIcno.Icon")));
             this.myNotificationIcno.Text = "notifyIcon1";
             this.myNotificationIcno.Visible = true;
             this.myNotificationIcno.DoubleClick += new System.EventHandler(this.OnNotificationIconDoubleClick);
             // 
-            // recentFilesToolStripMenuItem
+            // contextMenuStrip1
             // 
-            this._menuitemFileRecentFiles.Name = "_menuitemFileRecentFiles";
-            this._menuitemFileRecentFiles.Size = new System.Drawing.Size(210, 22);
-            this._menuitemFileRecentFiles.Text = "Recent Files";
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.restoreToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(114, 48);
+            // 
+            // restoreToolStripMenuItem
+            // 
+            this.restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
+            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.restoreToolStripMenuItem.Text = "Restore";
+            this.restoreToolStripMenuItem.Click += new System.EventHandler(this.OnNotificationIconDoubleClick);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnFileExit);
             // 
             // MDIParentForm
             // 
@@ -230,6 +257,7 @@
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.OnDragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,5 +284,8 @@
         private System.Windows.Forms.ToolStripMenuItem _menuitemToolPreference;
         private System.Windows.Forms.NotifyIcon myNotificationIcno;
         private System.Windows.Forms.ToolStripMenuItem _menuitemFileRecentFiles;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem restoreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }

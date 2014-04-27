@@ -22,15 +22,35 @@ namespace CloudKeysUI
             set { _key = value; }
         }
 
-        public KeyDialog()
+        private MainForm _caller;
+
+        public MainForm Caller
+        {
+            get { return _caller; }
+            set { _caller = value; }
+        }
+
+        private KeyChainMgr _mgr;
+
+        public KeyChainMgr Mgr
+        {
+            get { return _mgr; }
+            set { _mgr = value; }
+        }
+
+
+
+        public KeyDialog(MainForm f)
         {
             InitializeComponent();
             Application.Idle += Application_Idle;
+            _caller = f;
+            _mgr = f.KeyChainMgr;
         }
 
         void Application_Idle(object sender, EventArgs e)
         {
-            if(
+            if (
                 _tboxName.Text == "" ||
                 _tboxPassword.Text == "" ||
                 _tboxURL.Text == "" ||
@@ -43,10 +63,10 @@ namespace CloudKeysUI
             {
                 _btnOK.Enabled = true;
             }
-            
+
         }
 
-        private void KeyDialog_Load(object sender, EventArgs e)
+        private void OnLoad(object sender, EventArgs e)
         {
             if (_key == null)
             {
@@ -54,8 +74,8 @@ namespace CloudKeysUI
             }
             else
             {
-                Key cloneKey = _key.Clone();
-                _key = cloneKey;
+                //Key cloneKey = _key.Clone();
+                //_key = cloneKey;
                 _tboxName.Text = _key.Title;
                 _tboxNotes.Text = _key.Notes;
                 _tboxPassword.Text = _key.Password;
@@ -65,7 +85,7 @@ namespace CloudKeysUI
             }
         }
 
-        private void _btnOK_Click(object sender, EventArgs e)
+        private void OnOK(object sender, EventArgs e)
         {
             _key.Username = _tboxUsername.Text;
             _key.URL = _tboxURL.Text;
@@ -76,20 +96,29 @@ namespace CloudKeysUI
 
         }
 
-        private void _btnCancel_Click(object sender, EventArgs e)
+        private void OnTest(object sender, EventArgs e)
         {
-
-        }
-
-        private void _btnTest_Click(object sender, EventArgs e)
-        {
-            KeyChainMgr mgr = new KeyChainMgr();
-
-            _tboxName.Text = mgr.RandomString(10);
-            _tboxNotes.Text = mgr.RandomString(1000);
-            _tboxPassword.Text = mgr.RandomString(10);
-            _tboxURL.Text = mgr.RandomString(10);
-            _tboxUsername.Text = mgr.RandomString(10);
+            KeyChainMgr mgr = _mgr;
+            if (_tboxName.Text == "")
+            {
+                _tboxName.Text = mgr.RandomString(10);
+            }
+            if (_tboxNotes.Text == "")
+            {
+                _tboxNotes.Text = mgr.RandomString(1000);
+            }
+            if (_tboxPassword.Text == "")
+            {
+                _tboxPassword.Text = mgr.RandomString(10);
+            }
+            if (_tboxURL.Text == "")
+            {
+                _tboxURL.Text = mgr.RandomString(10);
+            }
+            if (_tboxUsername.Text == "")
+            {
+                _tboxUsername.Text = mgr.RandomString(10);
+            }
         }
     }
 }

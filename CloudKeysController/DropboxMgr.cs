@@ -67,6 +67,16 @@ namespace CloudKeysController
 
         public static string WriteToCloud(string path, byte[] content)
         {
+            int index = path.LastIndexOf("dropbox://");
+            int length = "dropbox://".Length;
+            if (index >= 0)
+            {
+                path = path.Substring(length);
+            }
+            if (!path.EndsWith(".kcf"))
+            {
+                path = path + ".kcf";
+            }
             byte[] cipherBytes = CryptoHelper.Encrypt(content);
             var uploaded = Client.UploadFile("CloudKeys", path, cipherBytes); //FileInfo
             return uploaded.Path;

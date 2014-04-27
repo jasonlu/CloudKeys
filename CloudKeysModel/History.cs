@@ -49,15 +49,21 @@ namespace CloudKeysModel
             string sEvent;
 
             string sSource = "CloudKey By Jason Lu";
-            sLog = "Application";
+            sLog = "CS503";
             sEvent = Description;
-            if (!EventLog.SourceExists(sSource))
-                EventLog.CreateEventSource(sSource, sLog);
+            try
+            {
+                if (!EventLog.SourceExists(sSource))
+                    EventLog.CreateEventSource(sSource, sLog);
 
-            //EventLog.WriteEntry(sSource, sEvent, EventLogEntryType.Warning, (int)Action);
-            EventLog.WriteEntry(sSource, sEvent, EventLogEntryType.Information, (int)Action);
+                //EventLog.WriteEntry(sSource, sEvent, EventLogEntryType.Warning, (int)Action);
+                EventLog.WriteEntry(sSource, sEvent, EventLogEntryType.Information, (int)Action);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
-
 
     }
 }

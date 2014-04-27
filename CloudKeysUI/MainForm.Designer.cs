@@ -106,7 +106,7 @@
             this._toolbarNewFile.Name = "_toolbarNewFile";
             this._toolbarNewFile.Size = new System.Drawing.Size(28, 28);
             this._toolbarNewFile.Text = "toolStripButton1";
-            this._toolbarNewFile.Click += new System.EventHandler(this._toolbarNewFile_Click);
+            this._toolbarNewFile.Click += new System.EventHandler(this._menuitemFileNew_Click);
             // 
             // _toolbarOpenFile
             // 
@@ -116,7 +116,7 @@
             this._toolbarOpenFile.Name = "_toolbarOpenFile";
             this._toolbarOpenFile.Size = new System.Drawing.Size(28, 28);
             this._toolbarOpenFile.Text = "toolStripButton2";
-            this._toolbarOpenFile.Click += new System.EventHandler(this._toolbarOpenFile_Click);
+            this._toolbarOpenFile.Click += new System.EventHandler(this._menuitemFileOpen_Click);
             // 
             // _toolbarSave
             // 
@@ -126,7 +126,7 @@
             this._toolbarSave.Name = "_toolbarSave";
             this._toolbarSave.Size = new System.Drawing.Size(28, 28);
             this._toolbarSave.Text = "toolStripButton3";
-            this._toolbarSave.Click += new System.EventHandler(this._toolbarSave_Click);
+            this._toolbarSave.Click += new System.EventHandler(this._menuitemFileSave_Click);
             // 
             // _toolbarPrint
             // 
@@ -136,7 +136,7 @@
             this._toolbarPrint.Name = "_toolbarPrint";
             this._toolbarPrint.Size = new System.Drawing.Size(28, 28);
             this._toolbarPrint.Text = "toolStripButton4";
-            this._toolbarPrint.Click += new System.EventHandler(this._toolbarPrint_Click);
+            this._toolbarPrint.Click += new System.EventHandler(this._menuitemFilePrint_Click);
             // 
             // toolStripSeparator1
             // 

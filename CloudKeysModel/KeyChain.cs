@@ -16,6 +16,7 @@ namespace CloudKeysModel
         }
 
         string _filename;
+        string _fullpath;
         bool _saved;
         public const string DefaultFilename = "?\\NEWFILE\\?";
         public const string WrongPassword = "?\\WRONGPASSWORD\\?";

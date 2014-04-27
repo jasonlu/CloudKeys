@@ -60,7 +60,7 @@ namespace CloudKeysModel
             set { _recentFileLimit = value; }
         }
 
-        private Font _font;
+        private Font _font = new Font("Arial", 8);
 
         [XmlIgnore]
         public Font Font
@@ -86,25 +86,25 @@ namespace CloudKeysModel
 
         private string _fontName = "Arial";
 
-         [CategoryAttribute("Document Settings"),
-        DefaultValueAttribute("Arial"), Browsable(false)]
+        [CategoryAttribute("Document Settings"),
+       DefaultValueAttribute("Arial"), Browsable(false)]
         public string FontName
         {
             get { return _fontName; }
             set { _fontName = value; }
         }
 
-         private float _fontSize;
+        private float _fontSize;
 
         [Browsable(false)]
-         public float FontSize
-         {
-             get { return _fontSize; }
-             set { _fontSize = value; }
-         }
+        public float FontSize
+        {
+            get { return _fontSize; }
+            set { _fontSize = value; }
+        }
 
         private bool _trayIcon = false;
-         
+
         [CategoryAttribute("Document Settings"),
         DefaultValueAttribute(false), DisplayName("Minimize to tray")]
         public bool TrayIcon
