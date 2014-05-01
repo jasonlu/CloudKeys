@@ -81,11 +81,6 @@ namespace CloudKeysController
             _lblFilename.Text = _filename.Substring(_filename.LastIndexOf("\\") + 1);
         }
 
-        private void _btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Abort;
-        }
-
         private void OnLoad(object sender, EventArgs e)
         {
             if (_newPassword)
@@ -93,6 +88,11 @@ namespace CloudKeysController
                 _lblFilename.Visible = false;
 
             }
+        }
+
+        private void _btnCancel_Click_1(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Abort;
         }
 
 

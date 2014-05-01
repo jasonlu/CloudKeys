@@ -49,7 +49,7 @@
             // _txtPassword
             // 
             this._txtPassword.Location = new System.Drawing.Point(43, 46);
-            this._txtPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this._txtPassword.Margin = new System.Windows.Forms.Padding(2);
             this._txtPassword.Name = "_txtPassword";
             this._txtPassword.PasswordChar = '*';
             this._txtPassword.Size = new System.Drawing.Size(186, 20);
@@ -58,7 +58,7 @@
             // _btnOK
             // 
             this._btnOK.Location = new System.Drawing.Point(177, 68);
-            this._btnOK.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this._btnOK.Margin = new System.Windows.Forms.Padding(2);
             this._btnOK.Name = "_btnOK";
             this._btnOK.Size = new System.Drawing.Size(50, 23);
             this._btnOK.TabIndex = 2;
@@ -70,12 +70,13 @@
             // 
             this._btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this._btnCancel.Location = new System.Drawing.Point(124, 68);
-            this._btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this._btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this._btnCancel.Name = "_btnCancel";
             this._btnCancel.Size = new System.Drawing.Size(49, 23);
             this._btnCancel.TabIndex = 3;
             this._btnCancel.Text = "Cancel";
             this._btnCancel.UseVisualStyleBackColor = true;
+            this._btnCancel.Click += new System.EventHandler(this._btnCancel_Click_1);
             // 
             // _lblFilename
             // 
@@ -110,7 +111,7 @@
             this.Controls.Add(this._txtPassword);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PasswordDialog";

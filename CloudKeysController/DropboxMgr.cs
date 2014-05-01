@@ -13,8 +13,8 @@ namespace CloudKeysController
 
     public static class DropboxMgr
     {
-        const string _apiKey = "1pv9j6cmhonclul";
-        const string _apiSecret = "v46aehha20oum1n";
+        const string _apiKey = "sauyzf0p46u7h8t";
+        const string _apiSecret = "rbsf2sgw1s0qnng";
         const string _callbackURL = "https://www.dropbox.com/1/oauth/authorize_submit";
         const string _cancelCallbackURL = "https://www.dropbox.com/home";
         static public DropNetClient Client = new DropNetClient(_apiKey, _apiSecret);

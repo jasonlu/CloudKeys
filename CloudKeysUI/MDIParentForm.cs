@@ -56,15 +56,7 @@ namespace CloudKeysUI
             MainForm f = new MainForm();
             f.WindowState = _windowState;
             f.MdiParent = this;
-            _openedWindow.Add(f);
-            if (url != "")
-            {
-                _openedFiles.Add(url);
-            }
-            else
-            {
-                _openedFiles.Add("");
-            }
+
             if (_windowState != DefaultState)
             {
                 f.StartPosition = FormStartPosition.Manual;
@@ -73,12 +65,19 @@ namespace CloudKeysUI
             ToolStripMenuItem windowItem = new ToolStripMenuItem();
             if (url != "")
             {
-                f.KeyChainMgr.Open(url);
+                if (f.KeyChainMgr.Open(url) == KeyChain.WrongPassword)
+                {
+                    return;
+                }
+                _openedFiles.Add(url);
             }
             else
             {
                 f.KeyChainMgr.NewKeyChain();
+                _openedFiles.Add("");
             }
+
+            _openedWindow.Add(f);
             f.InitUI();
             f.Show();
         }
